@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PageFly Enterprise — Pricing Card Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+    background: #f6f6f7;
+    padding: 40px 20px;
+    color: #1a1a1a;
+  }
+  .container { max-width: 1600px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .header .meta {
+    color: #6b7177;
+    font-size: 14px;
+  }
+  .header .meta strong { color: #1a1a1a; }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #6b7177;
+  }
+  .badge-row .star { color: #ffb700; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .tier {
+    background: white;
+    border: 1px solid #e3e5e7;
+    border-radius: 12px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .tier.popular {
+    border-color: #c9d8ff;
+    background: linear-gradient(180deg, #f0f5ff 0%, white 30%);
+  }
+
+  .tier.best {
+    border-color: #5fb37b;
+    border-width: 2px;
+    background: linear-gradient(180deg, #ecfdf3 0%, white 30%);
+    box-shadow: 0 4px 16px rgba(95, 179, 123, 0.15);
+    transform: scale(1.02);
+    z-index: 2;
+  }
+
+  .badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #5fb37b;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .badge.popular { background: #4a7cff; }
+
+  .tier-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .tier-tagline {
+    font-size: 13px;
+    color: #6b7177;
+    margin-bottom: 16px;
+    min-height: 32px;
+  }
+  .tier-price {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .tier-price .month {
+    font-size: 14px;
+    color: #6b7177;
+    font-weight: 400;
+  }
+  .tier-day {
+    font-size: 12px;
+    color: #6b7177;
+    margin-bottom: 16px;
+  }
+  .selector {
+    background: #f6f6f7;
+    border: 1px solid #e3e5e7;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cta {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  .cta.primary {
+    background: #008060;
+  }
+  .cta.disabled {
+    background: #e3e5e7;
+    color: #6b7177;
+    cursor: not-allowed;
+  }
+
+  .features-section {
+    margin-top: 12px;
+  }
+  .features-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7177;
+    margin-bottom: 8px;
+    margin-top: 12px;
+  }
+  .feature {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+  }
+  .feature::before {
+    content: "✓";
+    color: #008060;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .feature.upcoming::after {
+    content: "Upcoming";
+    background: #f6f6f7;
+    color: #6b7177;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: auto;
+    align-self: center;
+  }
+  .feature.new::after {
+    content: "NEW";
+    background: #fff3e0;
+    color: #b65500;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: auto;
+    align-self: center;
+  }
+
+  .footer-note {
+    margin-top: 40px;
+    text-align: center;
+    color: #6b7177;
+    font-size: 13px;
+  }
+
+  .pfe-strip {
+    margin-top: 40px;
+    background: linear-gradient(135deg, #1a3d2c 0%, #008060 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .pfe-strip h2 { font-size: 24px; margin-bottom: 8px; }
+  .pfe-strip p { opacity: 0.9; font-size: 14px; margin-bottom: 12px; line-height: 1.5; }
+  .pfe-strip .stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .pfe-strip .stat-num { font-size: 24px; font-weight: 700; }
+  .pfe-strip .stat-label { font-size: 12px; opacity: 0.85; }
+  .pfe-strip .cta-strip {
+    background: white;
+    color: #008060;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>PageFly Page Builder — Pricing</h1>
+    <div class="badge-row">
+      <span><span class="star">★★★★★</span> <strong>4.9/5</strong> on Shopify App Store</span>
+      <span><strong>250,000+</strong> active merchants</span>
+      <span>✓ Built for Shopify</span>
+    </div>
+    <div class="meta">No credit card required. Cancel anytime.</div>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- FREE -->
+    <div class="tier">
+      <div class="tier-name">Free</div>
+      <div class="tier-tagline">Try PageFly, see the value</div>
+      <div class="tier-price">$0</div>
+      <div class="tier-day">&nbsp;</div>
+      <button class="cta disabled">Downgrade</button>
+
+      <div class="features-title">AI Builder</div>
+      <div class="feature">Smart pages (early users)</div>
+
+      <div class="features-title">Builder</div>
+      <div class="feature">Drag & Drop</div>
+      <div class="feature">1 page or section</div>
+      <div class="feature">320+ templates</div>
+      <div class="feature">Option swatch</div>
+      <div class="feature">Global styling</div>
+
+      <div class="features-title">AI Credits</div>
+      <div class="feature">50 credits/month</div>
+
+      <div class="features-title">CRO Modules</div>
+      <div class="feature">Dashboard analytics</div>
+
+      <div class="features-title">Integration</div>
+      <div class="feature">200+ third party apps</div>
+
+      <div class="features-title">Support</div>
+      <div class="feature">Support 24/7</div>
+    </div>
+
+    <!-- BUILDER -->
+    <div class="tier">
+      <div class="tier-name">Builder</div>
+      <div class="tier-tagline">Launch pages that convert</div>
+      <div class="tier-price">$24<span class="month">/month</span></div>
+      <div class="tier-day">≈ $0.80/day</div>
+      <div class="selector">5 pages or sections ▼</div>
+      <button class="cta">Downgrade</button>
+
+      <div class="features-title">AI Builder</div>
+      <div class="feature">Smart pages (early users)</div>
+
+      <div class="features-title">Builder</div>
+      <div class="feature">Drag & Drop</div>
+      <div class="feature">5 pages or sections</div>
+      <div class="feature">320+ templates</div>
+      <div class="feature">Option swatch</div>
+      <div class="feature">Global styling</div>
+
+      <div class="features-title">AI Credits</div>
+      <div class="feature">400 credits/month</div>
+
+      <div class="features-title">Integration</div>
+      <div class="feature">200+ third party apps</div>
+
+      <div class="features-title">Support</div>
+      <div class="feature">Support 24/7</div>
+    </div>
+
+    <!-- OPTIMIZE -->
+    <div class="tier">
+      <div class="tier-name">Optimize</div>
+      <div class="tier-tagline">Test, learn & lift conversions</div>
+      <div class="tier-price">$69<span class="month">/month</span></div>
+      <div class="tier-day">≈ $2.3/day</div>
+      <div class="selector">50 pages or sections ▼</div>
+      <button class="cta disabled">Current Plan</button>
+
+      <div class="features-title">AI Builder</div>
+      <div class="feature">Smart pages (early users)</div>
+
+      <div class="features-title">Builder</div>
+      <div class="feature">50 pages or sections</div>
+      <div class="feature">Global styling</div>
+
+      <div class="features-title">AI Credits</div>
+      <div class="feature">1,300 credits/month</div>
+
+      <div class="features-title">CRO Modules</div>
+      <div class="feature">Dashboard analytics</div>
+      <div class="feature">Sales funnel</div>
+      <div class="feature">AI page checkup</div>
+      <div class="feature">A/B testing</div>
+
+      <div class="features-title">Integration</div>
+      <div class="feature">200+ third party apps</div>
+
+      <div class="features-title">Support</div>
+      <div class="feature">Support 24/7</div>
+    </div>
+
+    <!-- ACCELERATE -->
+    <div class="tier">
+      <div class="tier-name">Accelerate</div>
+      <div class="tier-tagline">Full CRO suite — grow faster</div>
+      <div class="tier-price">$99<span class="month">/month</span></div>
+      <div class="tier-day">≈ $3.3/day</div>
+      <button class="cta">Accelerate Now</button>
+
+      <div class="features-title">AI Builder</div>
+      <div class="feature">Smart pages (early users)</div>
+
+      <div class="features-title">Builder</div>
+      <div class="feature">Unlimited pages or sections</div>
+      <div class="feature">Global styling</div>
+
+      <div class="features-title">AI Credits</div>
+      <div class="feature">2,000 credits/month</div>
+
+      <div class="features-title">CRO Modules</div>
+      <div class="feature">Sales funnel</div>
+      <div class="feature">A/B testing</div>
+      <div class="feature">Heatmap preview</div>
+      <div class="feature">Section performance</div>
+      <div class="feature upcoming">User behavioral trigger</div>
+
+      <div class="features-title">Integration</div>
+      <div class="feature">200+ third party apps</div>
+
+      <div class="features-title">Support</div>
+      <div class="feature">Support 24/7</div>
+    </div>
+
+    <!-- POWER (was Best value, now Most popular) -->
+    <div class="tier popular">
+      <div class="badge popular">Most popular</div>
+      <div class="tier-name">Power</div>
+      <div class="tier-tagline">AI runs CRO on autopilot</div>
+      <div class="tier-price">$199<span class="month">/month</span></div>
+      <div class="tier-day">≈ $6.6/day</div>
+      <button class="cta">Go Power</button>
+
+      <div class="features-title">AI Builder</div>
+      <div class="feature">Smart pages (early users)</div>
+
+      <div class="features-title">Builder</div>
+      <div class="feature">Unlimited pages or sections</div>
+
+      <div class="features-title">AI Credits</div>
+      <div class="feature">4,000 credits/month</div>
+
+      <div class="features-title">CRO Modules</div>
+      <div class="feature">Sales funnel</div>
+      <div class="feature">Heatmap preview</div>
+      <div class="feature">Section performance</div>
+      <div class="feature upcoming">User behavioral trigger</div>
+      <div class="feature upcoming">AI SmartSeller</div>
+
+      <div class="features-title">Integration</div>
+      <div class="feature">200+ third party apps</div>
+
+      <div class="features-title">Support</div>
+      <div class="feature">Support 24/7</div>
+    </div>
+
+    <!-- 🆕 ENTERPRISE (PFE) — New, Best value -->
+    <div class="tier best">
+      <div class="badge">⭐ Best value</div>
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-tagline"><strong>Your store, our team.</strong> Built for Plus & multi-store brands.</div>
+      <div class="tier-price">$249<span class="month">/month</span></div>
+      <div class="tier-day">Intro price · Reg. $299/mo</div>
+      <button class="cta primary">Talk to our team →</button>
+
+      <div class="features-title">🛡️ Stability & Trust</div>
+      <div class="feature new">Priority bug-fix SLA <2h</div>
+      <div class="feature new">Pre-publish QA checker</div>
+      <div class="feature new">Auto rollback on publish fail</div>
+      <div class="feature new">256kb auto-compression</div>
+
+      <div class="features-title">👥 Dedicated Support Pod</div>
+      <div class="feature new">Dedicated TS Engineer</div>
+      <div class="feature new">Slack channel access</div>
+      <div class="feature new">Boo AI Agent (24/7 first-touch)</div>
+      <div class="feature new">1-2 pages built for you/month</div>
+      <div class="feature new">Weekly 30-min check-in</div>
+
+      <div class="features-title">🌐 Multi-Store License</div>
+      <div class="feature new">Up to 10 Shopify stores</div>
+      <div class="feature new">Cross-store section library</div>
+      <div class="feature new">Centralized billing</div>
+
+      <div class="features-title">🚀 Migration Concierge</div>
+      <div class="feature new">Free Unlimited → PFE migration</div>
+      <div class="feature new">Theme upgrade audit</div>
+      <div class="feature new">GEN1 → GEN2 done-for-you</div>
+
+      <div class="features-title">💎 Power features included</div>
+      <div class="feature">All Power $199 features</div>
+      <div class="feature">4,000 AI credits + bonus</div>
+
+      <div class="features-title">🎯 PFE-Exclusive</div>
+      <div class="feature new">Section Library + Version Control</div>
+      <div class="feature new">Team Roles & Permissions</div>
+      <div class="feature new">Audit log</div>
+      <div class="feature new">One-click cache purge</div>
+      <div class="feature new">Liquid editor mode</div>
+      <div class="feature new">GA4/Klaviyo native sync</div>
+    </div>
+
+  </div>
+
+  <!-- Highlight strip below pricing -->
+  <div class="pfe-strip">
+    <div>
+      <h2>Already on $99 Unlimited or Platinum?</h2>
+      <p>You're invited to preview PageFly Enterprise <strong>free for 14 days</strong>. Get a dedicated TS Engineer, multi-store license, and AI/CRO suite — see if PFE is right for your brand.</p>
+      <div class="stats">
+        <div>
+          <div class="stat-num">1,171</div>
+          <div class="stat-label">Existing Unlimited+Platinum merchants invited</div>
+        </div>
+        <div>
+          <div class="stat-num"><2h</div>
+          <div class="stat-label">Bug-fix response SLA</div>
+        </div>
+        <div>
+          <div class="stat-num">10</div>
+          <div class="stat-label">Stores per license</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <a href="#" class="cta-strip">Start 14-day Preview →</a>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Mockup v1 · Generated 2026-05-05 · For Tony Bui (Vanguard Team) review with Lâm (Boo) & Tú (TS Lead)
+  </div>
+</div>
+
+</body>
+</html>

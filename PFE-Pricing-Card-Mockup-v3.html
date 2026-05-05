@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PageFly Enterprise (PFE) — Pricing Card Mockup v3</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+    background: #f6f6f7;
+    padding: 40px 20px;
+    color: #1a1a1a;
+  }
+  .container { max-width: 1500px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; font-weight: 600; margin-bottom: 8px; }
+  .header .subtitle { color: #6b7177; font-size: 14px; margin-bottom: 16px; }
+  .header .meta-version {
+    display: inline-block;
+    background: #fff3e0;
+    color: #b65500;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .tier {
+    background: white;
+    border: 1px solid #e3e5e7;
+    border-radius: 12px;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .tier.best {
+    border-color: #5fb37b;
+    border-width: 2px;
+    background: linear-gradient(180deg, #ecfdf3 0%, white 30%);
+    box-shadow: 0 4px 16px rgba(95, 179, 123, 0.18);
+    transform: scale(1.03);
+    z-index: 2;
+  }
+  .badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #5fb37b;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .tier-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .tier-tagline { font-size: 12px; color: #6b7177; margin-bottom: 16px; min-height: 28px; line-height: 1.4; }
+  .tier-price { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+  .tier-price .month { font-size: 13px; color: #6b7177; font-weight: 400; }
+  .tier-day { font-size: 11px; color: #6b7177; margin-bottom: 14px; }
+  .credits-line {
+    background: #f0f5ff;
+    color: #2851a3;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .tier.best .credits-line { background: #d1fadf; color: #1a6b3f; }
+  .cta {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 18px;
+    width: 100%;
+  }
+  .cta.primary { background: #008060; font-size: 14px; }
+  .cta.disabled { background: #e3e5e7; color: #6b7177; cursor: not-allowed; }
+
+  .features-section { margin-top: 8px; }
+  .features-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7177;
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+  .feature {
+    display: flex;
+    gap: 8px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    margin-bottom: 5px;
+    color: #1a1a1a;
+  }
+  .feature::before { content: "✓"; color: #008060; font-weight: 700; flex-shrink: 0; }
+  .feature.new::after {
+    content: "NEW";
+    background: #fff3e0;
+    color: #b65500;
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: auto;
+    align-self: center;
+  }
+  .feature.preview::after {
+    content: "PREVIEW";
+    background: #e3e5ff;
+    color: #4842b7;
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: auto;
+    align-self: center;
+  }
+
+  /* Benefit-led section in PFE column */
+  .benefit-block {
+    background: white;
+    border: 1px solid #d1fadf;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  .benefit-block .benefit-icon { font-size: 16px; margin-bottom: 4px; display: block; }
+  .benefit-block .benefit-headline { font-size: 12.5px; font-weight: 600; color: #1a6b3f; margin-bottom: 4px; line-height: 1.3; }
+  .benefit-block .benefit-body { font-size: 11.5px; color: #4a4a4a; line-height: 1.4; }
+
+  /* MODAL STYLES */
+  .modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-backdrop.active { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 16px;
+    max-width: 880px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6b7177;
+  }
+  .modal h2 { font-size: 22px; margin-bottom: 6px; }
+  .modal .modal-sub { color: #6b7177; font-size: 14px; margin-bottom: 24px; }
+  .modal-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .modal-option {
+    border: 1.5px solid #e3e5e7;
+    border-radius: 12px;
+    padding: 20px 18px;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-option:hover { border-color: #5fb37b; box-shadow: 0 2px 8px rgba(95,179,123,0.15); }
+  .modal-option.featured { border-color: #5fb37b; background: #f0fdf4; }
+  .modal-option .opt-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #008060;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .modal-option .opt-price { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .modal-option .opt-price .mo { font-size: 12px; color: #6b7177; font-weight: 400; }
+  .modal-option .opt-summary { font-size: 13px; color: #4a4a4a; line-height: 1.4; margin-bottom: 12px; }
+  .modal-option .opt-bullet { font-size: 12px; color: #1a1a1a; margin-bottom: 4px; padding-left: 14px; position: relative; }
+  .modal-option .opt-bullet::before { content: "•"; position: absolute; left: 0; color: #008060; }
+  .modal-option .opt-cta {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+  .opt-cta button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-buy {
+    background: #008060;
+    color: white;
+  }
+  .btn-talk {
+    background: white;
+    color: #008060;
+    border: 1.5px solid #008060 !important;
+  }
+
+  .modal-form {
+    background: #f6f6f7;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 16px;
+    display: none;
+  }
+  .modal-form.active { display: block; }
+  .modal-form h3 { font-size: 16px; margin-bottom: 4px; }
+  .modal-form .form-sub { font-size: 12px; color: #6b7177; margin-bottom: 14px; }
+  .form-row { margin-bottom: 12px; }
+  .form-row label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; color: #1a1a1a; }
+  .form-row input, .form-row select, .form-row textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e3e5e7;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .form-row textarea { min-height: 80px; resize: vertical; }
+  .form-cta {
+    background: #008060;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .form-note {
+    font-size: 11px;
+    color: #6b7177;
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .form-note strong { color: #008060; }
+
+  /* MIGRATION STRIP */
+  .pfe-strip {
+    margin-top: 32px;
+    background: linear-gradient(135deg, #1a3d2c 0%, #008060 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .pfe-strip h2 { font-size: 22px; margin-bottom: 6px; }
+  .pfe-strip p { opacity: 0.92; font-size: 13px; line-height: 1.5; }
+  .pfe-strip .cta-strip {
+    background: white;
+    color: #008060;
+    padding: 13px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  /* Value Pillars section */
+  .pillars-section {
+    margin-top: 40px;
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid #e3e5e7;
+  }
+  .pillars-section h2 { text-align: center; font-size: 22px; margin-bottom: 6px; }
+  .pillars-section .pillars-sub { text-align: center; color: #6b7177; font-size: 13px; margin-bottom: 24px; }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  .pillar {
+    padding: 20px;
+    background: linear-gradient(180deg, #f0fdf4 0%, white 50%);
+    border-radius: 12px;
+    border: 1px solid #d1fadf;
+  }
+  .pillar .p-icon { font-size: 28px; margin-bottom: 10px; }
+  .pillar h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: #1a6b3f; }
+  .pillar p { font-size: 13px; line-height: 1.5; color: #4a4a4a; margin-bottom: 12px; }
+  .pillar .p-benefit {
+    font-size: 12px;
+    color: #008060;
+    font-weight: 600;
+    border-top: 1px solid #d1fadf;
+    padding-top: 10px;
+  }
+
+  .footer-note { margin-top: 32px; text-align: center; color: #6b7177; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>PageFly Page Builder — Pricing</h1>
+    <div class="subtitle">5 plans · Unified Credit System · Built for Shopify</div>
+    <div class="meta-version">Mockup v4 · Honest framing · Q2 2026</div>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- FREE -->
+    <div class="tier">
+      <div class="tier-name">Free</div>
+      <div class="tier-tagline">Try PageFly, see the value</div>
+      <div class="tier-price">$0</div>
+      <div class="tier-day">&nbsp;</div>
+      <div class="credits-line">5,000 credits/mo (~1 page)</div>
+      <button class="cta disabled">Downgrade</button>
+      <div class="features-title">Builder</div>
+      <div class="feature">Drag & Drop</div>
+      <div class="feature">320+ templates</div>
+      <div class="feature">Global styling</div>
+      <div class="features-title">Support</div>
+      <div class="feature">Standard 24/7</div>
+    </div>
+
+    <!-- 3-SLOT -->
+    <div class="tier">
+      <div class="tier-name">3-Slot</div>
+      <div class="tier-tagline">Small launch</div>
+      <div class="tier-price">$18<span class="month">/mo</span></div>
+      <div class="tier-day">≈ $0.60/day</div>
+      <div class="credits-line">15,000 credits/mo (~3 pages)</div>
+      <button class="cta">Choose plan</button>
+      <div class="features-title">Builder</div>
+      <div class="feature">3 pages/sections</div>
+      <div class="feature">320+ templates</div>
+      <div class="features-title">Support</div>
+      <div class="feature">Standard 24/7</div>
+    </div>
+
+    <!-- 10-SLOT -->
+    <div class="tier">
+      <div class="tier-name">10-Slot</div>
+      <div class="tier-tagline">Test & lift conversions</div>
+      <div class="tier-price">$29<span class="month">/mo</span></div>
+      <div class="tier-day">≈ $0.97/day</div>
+      <div class="credits-line">50,000 credits/mo (~10 pages)</div>
+      <button class="cta">Choose plan</button>
+      <div class="features-title">Builder</div>
+      <div class="feature">10 pages/sections</div>
+      <div class="features-title">CRO Modules</div>
+      <div class="feature">Sales funnel</div>
+      <div class="feature">A/B testing</div>
+      <div class="features-title">Support</div>
+      <div class="feature">Standard 24/7</div>
+    </div>
+
+    <!-- UNLIMITED -->
+    <div class="tier">
+      <div class="tier-name">Unlimited</div>
+      <div class="tier-tagline">Full CRO suite — grow faster</div>
+      <div class="tier-price">$99<span class="month">/mo</span></div>
+      <div class="tier-day">≈ $3.30/day</div>
+      <div class="credits-line">300,000 credits/mo (~60 pages)</div>
+      <button class="cta">Upgrade now</button>
+      <div class="features-title">Builder</div>
+      <div class="feature">Unlimited pages/sections</div>
+      <div class="features-title">AI Builder</div>
+      <div class="feature">Smart pages</div>
+      <div class="features-title">CRO Modules</div>
+      <div class="feature">Full CRO suite</div>
+      <div class="feature">Heatmap preview</div>
+      <div class="feature">A/B testing</div>
+      <div class="features-title">Support</div>
+      <div class="feature">Standard 24/7</div>
+    </div>
+
+    <!-- 🆕 ENTERPRISE = PFE -->
+    <div class="tier best">
+      <div class="badge">⭐ Best for Plus & Multi-store</div>
+      <div class="tier-name">Enterprise (PFE)</div>
+      <div class="tier-tagline"><strong>Your store, our team.</strong> Built for Shopify Plus & multi-store brands.</div>
+      <div class="tier-price">From $199<span class="month">/mo</span></div>
+      <div class="tier-day">+ optional add-ons · custom quote</div>
+      <div class="credits-line">600,000 credits/mo (~120 pages)</div>
+      <button class="cta primary" onclick="openModal()">Get the pricing →</button>
+
+      <!-- BENEFIT-LED BLOCKS (Top 3 outcomes) -->
+      <div class="features-title">🎯 What you get</div>
+
+      <div class="benefit-block">
+        <span class="benefit-icon">⚡</span>
+        <div class="benefit-headline">Build pages 2x faster</div>
+        <div class="benefit-body">2x AI credits (600K/mo) means more landing pages, more A/B tests, more revenue experiments — without watching the credit meter.</div>
+      </div>
+
+      <div class="benefit-block">
+        <span class="benefit-icon">🛡️</span>
+        <div class="benefit-headline">Stop losing sales to bugs</div>
+        <div class="benefit-body">Tech Lead reviews your tickets first, top of the queue, ASAP turnaround — so a broken publish doesn't cost you the weekend's sales.</div>
+      </div>
+
+      <div class="benefit-block">
+        <span class="benefit-icon">🤝</span>
+        <div class="benefit-headline">Grow with a co-founder by your side</div>
+        <div class="benefit-body">Tony (co-founder) personally reviews your goals, blockers, and roadmap requests — so PageFly evolves with your business, not against it.</div>
+      </div>
+
+      <div class="features-title">🚀 PFE-Exclusive (MVP)</div>
+      <div class="feature new">Co-founder access (Tony reviews personally)</div>
+      <div class="feature new">Tech Lead reviews your tickets first</div>
+      <div class="feature new">Top of priority queue · ASAP turnaround</div>
+      <div class="feature new">2x AI credits (600K/mo)</div>
+      <div class="feature new">Multi-store license (1+ stores · pay as you grow)</div>
+      <div class="feature new">"Feedback on My Store" — AI Audit + Tony review</div>
+
+      <div class="features-title">All Unlimited features +</div>
+      <div class="feature">Unlimited pages/sections</div>
+      <div class="feature">Smart pages (AI Builder)</div>
+      <div class="feature">Full CRO suite</div>
+
+      <div class="features-title">📅 Coming soon (Roadmap)</div>
+      <div class="feature preview">Free Unlimited → PFE migration</div>
+      <div class="feature preview">Section Library + Version Control</div>
+      <div class="feature preview">Team Roles & Permissions</div>
+      <div class="feature preview">Pre-publish QA checker</div>
+      <div class="feature preview">Audit log</div>
+    </div>
+
+  </div>
+
+  <!-- VALUE PILLARS — applied from Shopify Plus framework -->
+  <div class="pillars-section">
+    <h2>Why PFE? Three pillars of value for Shopify Plus brands.</h2>
+    <p class="pillars-sub">PFE addresses the three challenges every Plus merchant faces — speed, confidence, and the freedom to innovate without breaking things.</p>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="p-icon">⚡</div>
+        <h3>Speed & Agility</h3>
+        <p>Stop waiting for support. Build pages in minutes with 2x AI credits (600K/mo). Launch promotions across multiple stores without re-doing work. Move at the pace your brand needs to stay ahead.</p>
+        <div class="p-benefit">→ Ship 2x more landing pages this quarter</div>
+      </div>
+
+      <div class="pillar">
+        <div class="p-icon">🛡️</div>
+        <h3>Operate with Confidence</h3>
+        <p>Tech Lead reviews your tickets first. Tony (co-founder) personally responds to your strategic asks. Predictable monthly cost — no surprise fees, no hidden tier jumps. You grow without operational anxiety.</p>
+        <div class="p-benefit">→ Reclaim hours lost to support back-and-forth</div>
+      </div>
+
+      <div class="pillar">
+        <div class="p-icon">🎨</div>
+        <h3>Innovation You Can Customize</h3>
+        <p>"Feedback on My Store" — our AI Audit agent + Tony's review tells you what's working and what to test next. PageFly stops being a builder; it becomes your conversion partner.</p>
+        <div class="p-benefit">→ Compound CRO insights month over month</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Migration strip — UPDATED for Unlimited/Platinum target -->
+  <div class="pfe-strip">
+    <div>
+      <h2>Already on $99 Unlimited or Platinum?</h2>
+      <p><strong>PFE is built for you.</strong> Same starting price as your current plan, plus 2x AI credits, multi-store license, Tech Lead priority, and direct access to Tony. Preview free for 14 days — no card needed, no auto-charge.</p>
+    </div>
+    <div style="text-align: center;">
+      <a href="#" class="cta-strip" onclick="openModal(); return false;">Start 14-day Preview →</a>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Mockup v3 · 2026-05-05 · For Tony Bui (Vanguard Team) · Shopify Value Pillars framework applied · MVP scope per O2KR1
+  </div>
+</div>
+
+<!-- DYNAMIC PRICING MODAL -->
+<div class="modal-backdrop" id="pricing-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Find the right PFE for your brand</h2>
+    <div class="modal-sub">Choose a starting bundle and proceed — or tell us about your goals if you need a custom setup.</div>
+
+    <div class="modal-options">
+
+      <!-- BUNDLE A -->
+      <div class="modal-option">
+        <div class="opt-label">Bundle A</div>
+        <div class="opt-price">$199<span class="mo">/mo</span></div>
+        <div class="opt-summary">For single Plus store with high build velocity</div>
+        <div class="opt-bullet">600K credits / 120 pages</div>
+        <div class="opt-bullet">Tech Lead review (shared queue)</div>
+        <div class="opt-bullet">Top priority · ASAP turnaround</div>
+        <div class="opt-bullet">1 store license</div>
+        <div class="opt-bullet">Feedback on My Store (monthly)</div>
+        <div class="opt-bullet">Co-founder access (Tony)</div>
+        <div class="opt-cta">
+          <button class="btn-buy" onclick="alert('Proceeding to checkout: Bundle A — $199/mo')">Choose this →</button>
+        </div>
+      </div>
+
+      <!-- BUNDLE B -->
+      <div class="modal-option featured">
+        <div class="opt-label">Bundle B · ⭐ Most chosen</div>
+        <div class="opt-price">$299<span class="mo">/mo</span></div>
+        <div class="opt-summary">For multi-store brands needing white-glove care</div>
+        <div class="opt-bullet">600K credits / 120 pages</div>
+        <div class="opt-bullet">Tech Lead reviews 1:1 (named owner)</div>
+        <div class="opt-bullet">Top priority · ASAP turnaround</div>
+        <div class="opt-bullet">Up to 3 stores included</div>
+        <div class="opt-bullet">Feedback on My Store (weekly)</div>
+        <div class="opt-bullet">Co-founder access (Tony)</div>
+        <div class="opt-bullet">Coming soon: free Unlimited→PFE migration</div>
+        <div class="opt-cta">
+          <button class="btn-buy" onclick="alert('Proceeding to checkout: Bundle B — $299/mo')">Choose this →</button>
+        </div>
+      </div>
+
+      <!-- CUSTOM -->
+      <div class="modal-option">
+        <div class="opt-label">Custom</div>
+        <div class="opt-price">Talk to us</div>
+        <div class="opt-summary">For agencies, brands &gt;3 stores, or specific needs (white-label, API, volume)</div>
+        <div class="opt-bullet">Per-store add-on: $50/mo each</div>
+        <div class="opt-bullet">Custom credit allocation</div>
+        <div class="opt-bullet">Custom support hours</div>
+        <div class="opt-bullet">Volume pricing for agencies</div>
+        <div class="opt-cta">
+          <button class="btn-talk" onclick="showForm()">Talk to us →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM hidden by default, shows only when "Talk to us" clicked -->
+    <div class="modal-form" id="modal-form">
+      <h3>Talk us about your goals</h3>
+      <div class="form-sub">Tony (co-founder) personally reviews every reply with our Boo AI Agent. Expect a response within 24h — no SDR queue, no sales rep.</div>
+
+      <div class="form-row">
+        <label>Your store URL <span style="color:#d32f2f;">*</span></label>
+        <input type="text" placeholder="yourbrand.myshopify.com" />
+      </div>
+
+      <div class="form-row">
+        <label>How many Shopify stores do you run?</label>
+        <select>
+          <option>1 store</option>
+          <option>2-3 stores</option>
+          <option>4-10 stores</option>
+          <option>11+ stores (agency or large brand)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>What's your main goal with PFE?</label>
+        <select>
+          <option>Reduce downtime / get faster bug-fix</option>
+          <option>Scale page-build velocity (need more credits)</option>
+          <option>Manage multiple stores under one license</option>
+          <option>Migrate from Unlimited to new pricing</option>
+          <option>Get ongoing feedback & strategy from your team</option>
+          <option>Other (tell us below)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Anything else we should know? (optional)</label>
+        <textarea placeholder="What's your biggest blocker today? What would success look like 90 days from now?"></textarea>
+      </div>
+
+      <button class="form-cta" onclick="alert('Form submitted — sending to Tony directly. Expect reply within 24h.')">Send to Tony →</button>
+      <div class="form-note">
+        💚 <strong>This goes directly to Tony Bui (co-founder)</strong>. He reads every reply with Boo AI Agent and responds personally within 24h.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('pricing-modal').classList.add('active');
+    document.getElementById('modal-form').classList.remove('active');
+  }
+  function closeModal() {
+    document.getElementById('pricing-modal').classList.remove('active');
+    document.getElementById('modal-form').classList.remove('active');
+  }
+  function showForm() {
+    document.getElementById('modal-form').classList.add('active');
+    setTimeout(() => {
+      document.getElementById('modal-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+</script>
+
+</body>
+</html>
