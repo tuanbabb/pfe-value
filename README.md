@@ -6,7 +6,8 @@ Pricing card mockup iterations for **PageFly Enterprise (PFE)** — internal des
 
 | Version | Link | Date |
 |---------|------|------|
-| **v5 (latest)** | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v5.html) | 06-05-2026 |
+| **v8 (latest)** | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v8.html) | 07-05-2026 |
+| v5 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v5.html) | 06-05-2026 |
 | v4 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v4.html) | 05-05-2026 |
 | v3 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v3.html) | 05-05-2026 |
 | v2 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v2.html) | 05-05-2026 |
