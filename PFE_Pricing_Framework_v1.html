@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PFE Pricing Framework v1</title>
+<style>
+:root { color-scheme: light; --ink:#1a1a1a; --muted:#666; --line:#e5e5e5; --bg:#ffffff; --soft:#f7f7f5; --accent:#5b4bd1; --accent-soft:#eeedfe; --teal:#0f6e56; --teal-soft:#e1f5ee; --coral:#993c1d; --coral-soft:#faece7; --amber:#854f0b; --amber-soft:#faeeda; --pink:#993556; --pink-soft:#fbeaf0; --gray:#5f5e5a; --gray-soft:#f1efe8; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, "SF Pro", "Inter", system-ui, sans-serif; margin: 0; padding: 32px 28px 64px; background: var(--bg); color: var(--ink); line-height: 1.55; font-size: 14px; }
+.wrap { max-width: 1280px; margin: 0 auto; }
+header { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 28px; }
+h1 { font-size: 22px; font-weight: 500; margin: 0 0 4px; letter-spacing: -0.01em; }
+.subtitle { color: var(--muted); font-size: 13px; margin: 0; }
+.meta { color: var(--muted); font-size: 12px; margin-top: 8px; }
+h2 { font-size: 18px; font-weight: 500; margin: 36px 0 14px; letter-spacing: -0.01em; }
+h2 .num { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; font-weight: 500; text-align: center; line-height: 22px; margin-right: 8px; vertical-align: 2px; }
+h3 { font-size: 15px; font-weight: 500; margin: 22px 0 8px; }
+.callout { background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #26215C; margin: 12px 0 18px; border-left: 3px solid var(--accent); }
+.callout strong { color: var(--accent); }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 10px 0; }
+th, td { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; background: var(--soft); }
+.matrix th { white-space: nowrap; }
+.matrix td.feat { font-weight: 500; color: var(--ink); white-space: nowrap; background: #fcfcfb; }
+.matrix .check { color: var(--teal); font-weight: 500; }
+.matrix .dash { color: #ccc; }
+.matrix .price { font-size: 16px; font-weight: 500; color: var(--ink); }
+.matrix .tag { display: inline-block; font-size: 10.5px; padding: 1px 6px; border-radius: 3px; margin-left: 4px; vertical-align: 2px; }
+.tag-pop { background: var(--accent-soft); color: var(--accent); }
+.tag-best { background: var(--teal-soft); color: var(--teal); }
+.tag-pfe { background: var(--coral-soft); color: var(--coral); }
+.tag-up { background: var(--amber-soft); color: var(--amber); font-size: 10px; }
+.icp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 12px; margin: 14px 0 8px; }
+.icp-card { border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 12px; background: var(--bg); }
+.icp-card.pfe { border: 2px solid var(--coral); background: #fffaf7; }
+.icp-card .tier { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.icp-card .tier-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+.icp-card .tier-price { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.icp-card .row { display: flex; gap: 8px; font-size: 12px; padding: 4px 0; border-top: 1px dashed #eee; }
+.icp-card .row:first-of-type { border-top: 0; }
+.icp-card .row .lbl { width: 78px; flex-shrink: 0; color: var(--muted); }
+.icp-card .row .val { flex: 1; color: var(--ink); }
+.value-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 14px 0; }
+.value-row { display: grid; grid-template-columns: 220px 1fr 1.1fr; gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.value-row > div { padding: 14px 16px; }
+.value-row .pillar { background: var(--soft); border-right: 1px solid var(--line); }
+.value-row .pillar-name { font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+.value-row .pillar-desc { font-size: 12px; color: var(--muted); }
+.value-row .proof { border-right: 1px solid var(--line); }
+.value-row .proof-title { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.value-row .proof-list { margin: 0; padding-left: 16px; font-size: 12.5px; }
+.value-row .proof-list li { margin-bottom: 4px; }
+.value-row .pitch-title { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.value-row .pitch-text { font-size: 12.5px; font-style: italic; color: #2c2c2a; }
+.glossary { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 8px; }
+.gloss-card { border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; background: #fffaf7; border-left: 3px solid var(--coral); }
+.gloss-card h4 { margin: 0 0 4px; font-size: 14px; font-weight: 500; color: var(--coral); }
+.gloss-card .lead { font-size: 12px; color: var(--muted); margin: 0 0 12px; font-style: italic; }
+.gloss-card .ladder { margin: 8px 0 10px; font-size: 12.5px; }
+.gloss-card .ladder-row { display: flex; gap: 10px; padding: 5px 0; border-bottom: 1px dashed #eee; }
+.gloss-card .ladder-row:last-child { border-bottom: 0; }
+.gloss-card .ladder-tier { width: 80px; flex-shrink: 0; font-weight: 500; color: #4A1B0C; }
+.gloss-card .ladder-val { flex: 1; color: var(--ink); }
+.gloss-card .say { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #2c2c2a; margin-top: 10px; }
+.gloss-card .say-label { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; display: block; }
+.gloss-card .say-text { font-style: italic; }
+@media (max-width: 760px) { .glossary { grid-template-columns: 1fr; } }
+.next { background: var(--soft); border-radius: 10px; padding: 16px 18px; margin-top: 24px; font-size: 13px; }
+.next h3 { margin-top: 0; }
+.next ol { margin: 8px 0 0; padding-left: 20px; }
+.next li { margin-bottom: 6px; }
+.gap-banner { background: var(--coral-soft); border-radius: 10px; padding: 14px 16px; margin: 14px 0 4px; font-size: 13px; color: var(--coral); }
+.gap-banner strong { color: #4A1B0C; }
+.legend { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+.scrollx { overflow-x: auto; }
+@media (max-width: 760px) {
+  .value-row { grid-template-columns: 1fr; }
+  .value-row .pillar, .value-row .proof { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>PFE Pricing Framework v1</h1>
+    <p class="subtitle">PageFly Enterprise positioning, ICP mapping & value pillars — built from current public pricing</p>
+    <p class="meta">Source: admin.shopify.com/store/tai-plus2/apps/pagefly/pricing • Captured 2026-05-04 • Owner: Tony (T) + H</p>
+  </header>
+
+  <div class="callout">
+    <strong>Reading guide.</strong> Section 1 = current 5-tier public pricing as a fact base. Section 2 = ICP per tier so we can see where PFE breaks off. Section 3 = the value table T + H use to build the PFE package — pillars, proof, and customer-facing pitch.
+  </div>
+
+  <h2><span class="num">1</span>Pricing tiers + features matrix</h2>
+  <p class="legend">Captured live from PageFly Shopify admin. Public ladder tops out at <strong>$199/mo Power</strong>. PFE column is the proposed enterprise tier (not yet live).</p>
+
+  <div class="scrollx">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th style="width: 200px;">Feature</th>
+        <th>Free</th>
+        <th>Builder</th>
+        <th>Optimize</th>
+        <th>Accelerate <span class="tag tag-pop">Most popular</span></th>
+        <th>Power <span class="tag tag-best">Best value</span></th>
+        <th>PFE: Scale / Dominate / Empire <span class="tag tag-pfe">Proposed</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="feat">Price / month</td>
+        <td class="price">$0</td>
+        <td class="price">$24</td>
+        <td class="price">$69</td>
+        <td class="price">$99</td>
+        <td class="price">$199</td>
+        <td class="price">$299 / $499 / Custom</td>
+      </tr>
+      <tr>
+        <td class="feat">Tagline</td>
+        <td>Try, see value</td>
+        <td>Launch pages that convert</td>
+        <td>Test, learn & lift</td>
+        <td>Full CRO suite — grow faster</td>
+        <td>AI runs CRO on autopilot</td>
+        <td>CRO + service for scaling brands</td>
+      </tr>
+      <tr>
+        <td class="feat">Pages or sections</td>
+        <td>1</td>
+        <td>5</td>
+        <td>50</td>
+        <td>Unlimited</td>
+        <td>Unlimited</td>
+        <td>Unlimited + multi-store</td>
+      </tr>
+      <tr>
+        <td class="feat">Templates</td>
+        <td>320+</td>
+        <td>320+</td>
+        <td>320+</td>
+        <td>320+</td>
+        <td>320+</td>
+        <td>320+ + custom blocks</td>
+      </tr>
+      <tr>
+        <td class="feat">AI credits / month</td>
+        <td>50</td>
+        <td>400</td>
+        <td>1,300</td>
+        <td>2,000</td>
+        <td>4,000</td>
+        <td>10,000+ (negotiable)</td>
+      </tr>
+      <tr>
+        <td class="feat">Smart pages (AI)</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">Dashboard analytics</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">Sales funnel</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">AI page checkup</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">A/B testing</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">Heatmap preview</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">Section performance</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+        <td class="check">●</td>
+      </tr>
+      <tr>
+        <td class="feat">User behavioral trigger</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td><span class="check">●</span> <span class="tag tag-up">Upcoming</span></td>
+        <td><span class="check">●</span> <span class="tag tag-up">Upcoming</span></td>
+        <td class="check">● Priority</td>
+      </tr>
+      <tr>
+        <td class="feat">AI SmartSeller</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td><span class="check">●</span> <span class="tag tag-up">Upcoming</span></td>
+        <td class="check">● Early access</td>
+      </tr>
+      <tr>
+        <td class="feat">Integrations</td>
+        <td>200+ apps</td>
+        <td>200+ apps</td>
+        <td>200+ apps</td>
+        <td>200+ apps</td>
+        <td>200+ apps</td>
+        <td>200+ + custom API</td>
+      </tr>
+      <tr>
+        <td class="feat">Support</td>
+        <td>24/7 chat</td>
+        <td>24/7 chat</td>
+        <td>24/7 chat</td>
+        <td>24/7 chat</td>
+        <td>24/7 chat</td>
+        <td>Dedicated CSM + SLA</td>
+      </tr>
+      <tr>
+        <td class="feat">Service layer</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="dash">—</td>
+        <td class="check">● CRO consulting + page build</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="gap-banner">
+    <strong>The PFE gap.</strong> Above $199 there is no public tier. Power is the natural ceiling for self-serve. PFE captures the merchants whose constraint is no longer "more features" but "more leverage" — multi-store, dedicated CSM, custom CRO work, SLA. Self-serve can't price-discriminate that segment.
+  </div>
+
+  <h2><span class="num">2</span>ICP mapping per tier</h2>
+  <p class="legend">Each card = the merchant who actually picks this tier. Use this to (a) qualify Shopify Affiliate referrals, (b) decide upsell triggers in-app, (c) identify PFE handoff signals.</p>
+
+  <div class="icp-grid">
+    <div class="icp-card">
+      <div class="tier">Free · $0</div>
+      <div class="tier-name">Curious starter</div>
+      <div class="tier-price">Try, see value</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">&lt; $5K/mo or pre-launch</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">Validating Shopify itself</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">Theme too rigid, no design skills</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">Solo founder</span></div>
+      <div class="row"><span class="lbl">Goal</span><span class="val">Ship one decent page</span></div>
+    </div>
+    <div class="icp-card">
+      <div class="tier">Builder · $24</div>
+      <div class="tier-name">Hands-on operator</div>
+      <div class="tier-price">Launch pages that convert</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$5K–$30K/mo</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">Early traction, 1 store</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">Need landing pages for ads</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">Founder or 1st marketer</span></div>
+      <div class="row"><span class="lbl">Goal</span><span class="val">≤5 high-quality pages</span></div>
+    </div>
+    <div class="icp-card">
+      <div class="tier">Optimize · $69</div>
+      <div class="tier-name">Conversion-aware DTC</div>
+      <div class="tier-price">Test, learn & lift conversions</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$30K–$200K/mo</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">Scaling paid + email</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">CVR plateau, blind on funnel</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">Growth/CRO marketer</span></div>
+      <div class="row"><span class="lbl">Goal</span><span class="val">Run A/B + diagnose drop-off</span></div>
+    </div>
+    <div class="icp-card">
+      <div class="tier">Accelerate · $99</div>
+      <div class="tier-name">Full-suite CRO team</div>
+      <div class="tier-price">Full CRO suite — grow faster</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$200K–$1M/mo</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">Dedicated growth fn</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">Need heatmaps + section data</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">Head of Growth / CRO lead</span></div>
+      <div class="row"><span class="lbl">Goal</span><span class="val">Run continuous CRO program</span></div>
+    </div>
+    <div class="icp-card">
+      <div class="tier">Power · $199</div>
+      <div class="tier-name">AI-leaning brand</div>
+      <div class="tier-price">AI runs CRO on autopilot</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$500K–$3M/mo</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">8-figure-bound, lean team</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">Wants AI to do the heavy lifting</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">CMO or technical founder</span></div>
+      <div class="row"><span class="lbl">Goal</span><span class="val">Compress CRO cycle 5×</span></div>
+    </div>
+    <div class="icp-card pfe">
+      <div class="tier" style="color: var(--coral);">PFE · Scale $299</div>
+      <div class="tier-name">Just hit Plus</div>
+      <div class="tier-price">Single store, scaling fast</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$1M–$5M/yr</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">1 store, just upgraded Plus</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">Need CRO partner, lean team</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">Founder / Head of Growth</span></div>
+      <div class="row"><span class="lbl">Founder</span><span class="val">1 booking/mo (async review)</span></div>
+    </div>
+    <div class="icp-card pfe">
+      <div class="tier" style="color: var(--coral);">PFE · Dominate $499</div>
+      <div class="tier-name">Category leader</div>
+      <div class="tier-price">Up to 3 stores, named PIC</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$5M–$20M/yr</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">2–3 stores, dedicated CRO fn</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">Stuck shared queue, want owner</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">CMO / Head of eCom</span></div>
+      <div class="row"><span class="lbl">Founder</span><span class="val">2 bookings/mo (async review)</span></div>
+    </div>
+    <div class="icp-card pfe">
+      <div class="tier" style="color: var(--coral);">PFE · Empire (Custom)</div>
+      <div class="tier-name">Multi-store empire</div>
+      <div class="tier-price">Founder partnership, white-glove</div>
+      <div class="row"><span class="lbl">GMV</span><span class="val">$20M–$100M+/yr</span></div>
+      <div class="row"><span class="lbl">Stage</span><span class="val">Agency or &gt;3 stores, API needs</span></div>
+      <div class="row"><span class="lbl">Pain</span><span class="val">N stores, white-label, volume</span></div>
+      <div class="row"><span class="lbl">Decider</span><span class="val">CMO / Agency owner + procurement</span></div>
+      <div class="row"><span class="lbl">Founder</span><span class="val">Strategic partnership (configurable)</span></div>
+    </div>
+  </div>
+
+  <h2><span class="num">3</span>PFE Value table — for T + H to build the package</h2>
+  <p class="legend">Five pillars. Each row = the value, the proof points we can stand behind today, and the customer-facing pitch we'd say in a Plus merchant call.</p>
+
+  <div class="value-grid">
+
+    <div class="value-row">
+      <div class="pillar">
+        <div class="pillar-name">1. Done-with-you CRO</div>
+        <div class="pillar-desc">Strategy + execution, not just a tool.</div>
+      </div>
+      <div class="proof">
+        <div class="proof-title">Proof points</div>
+        <ul class="proof-list">
+          <li>Dedicated CRO consultant (Shopify Partner, top-tier track record)</li>
+          <li>Quarterly experiment roadmap tied to merchant KPIs</li>
+          <li>Build queue: PageFly team ships pages, merchant reviews</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pitch-title">Customer pitch</div>
+        <p class="pitch-text">"You don't need another tool — you need a team that knows Shopify CRO and treats your funnel like their own. PFE gives you both: PageFly + a CRO partner."</p>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="pillar">
+        <div class="pillar-name">2. AI leverage at enterprise scale</div>
+        <div class="pillar-desc">10K+ AI credits + early access to SmartSeller, behavioral triggers.</div>
+      </div>
+      <div class="proof">
+        <div class="proof-title">Proof points</div>
+        <ul class="proof-list">
+          <li>10,000+ AI credits/mo (vs. 4,000 on Power)</li>
+          <li>Early access to AI SmartSeller (Upcoming) + behavioral triggers</li>
+          <li>Smart pages priority queue + custom prompts</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pitch-title">Customer pitch</div>
+        <p class="pitch-text">"Your team already runs lean. PFE's AI budget means PageFly drafts the variants, runs the diagnostics, and surfaces winners — your CRO lead just approves and ships."</p>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="pillar">
+        <div class="pillar-name">3. Multi-store + multi-region</div>
+        <div class="pillar-desc">Single contract, central design system, cross-store templates.</div>
+      </div>
+      <div class="proof">
+        <div class="proof-title">Proof points</div>
+        <ul class="proof-list">
+          <li>Multi-store license (1 contract, N stores)</li>
+          <li>Shared global styles + custom blocks across stores</li>
+          <li>Localized template variants for region rollouts</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pitch-title">Customer pitch</div>
+        <p class="pitch-text">"Stop paying $199 × N stores and rebuilding the same hero five times. PFE gives you one license, one design system, and pages that propagate across regions."</p>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="pillar">
+        <div class="pillar-name">4. Speed + reliability SLA</div>
+        <div class="pillar-desc">Dedicated CSM, response SLA, priority bug & feature queue.</div>
+      </div>
+      <div class="proof">
+        <div class="proof-title">Proof points</div>
+        <ul class="proof-list">
+          <li>Dedicated CSM (1:N capped) — not shared chat queue</li>
+          <li>Response SLA: P1 &lt; 2h, P2 &lt; 8h business hours</li>
+          <li>Priority routing for bugs + feature requests</li>
+          <li>Quarterly business review with Tony / Head of Growth</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pitch-title">Customer pitch</div>
+        <p class="pitch-text">"At your scale, a 24h ticket loop costs more than the subscription. PFE puts you on a named CSM with an SLA you can take to your CFO."</p>
+      </div>
+    </div>
+
+    <div class="value-row">
+      <div class="pillar">
+        <div class="pillar-name">5. Compounding ROI</div>
+        <div class="pillar-desc">Pricing built on lift, not seat count.</div>
+      </div>
+      <div class="proof">
+        <div class="proof-title">Proof points</div>
+        <ul class="proof-list">
+          <li>Pricing tied to GMV band — fair on both sides</li>
+          <li>Quarterly lift report: experiments shipped × incremental CVR</li>
+          <li>Case studies: PageFly customers with documented +X% CVR</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pitch-title">Customer pitch</div>
+        <p class="pitch-text">"PFE pays for itself if we lift CVR by even 0.3 points on your top three pages. We share the receipt every quarter — if the lift isn't there, the package shouldn't be either."</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h2><span class="num">4</span>Key PFE concepts — what each term actually means</h2>
+  <p class="legend">Concepts locked from PFE-CS-Flow-Proposal-v0.2 — the ones T + H need to be fluent in for sales calls. Memorize the ladder, the "say it" line is the customer-ready version.</p>
+
+  <div class="glossary">
+
+    <div class="gloss-card">
+      <h4>Founder partnership</h4>
+      <p class="lead">T's time becomes a strategic asset that escalates by tier — not a feature SKU.</p>
+      <div class="ladder">
+        <div class="ladder-row"><span class="ladder-tier">Scale $299</span><span class="ladder-val">1 booking/mo · 45 min async store review từ T (email + Loom back)</span></div>
+        <div class="ladder-row"><span class="ladder-tier">Dominate $499</span><span class="ladder-val">2 bookings/mo · same async format</span></div>
+        <div class="ladder-row"><span class="ladder-tier">Empire</span><span class="ladder-val">Strategic relationship: configurable cadence, co-author roadmap, QBR, network intros, Tech Lead + Founder committed</span></div>
+      </div>
+      <div class="say">
+        <span class="say-label">Say it to a Plus merchant</span>
+        <p class="say-text">"At Empire, you're not buying booking slots — you're getting a co-founder who treats your funnel like ours. We map strategy, intro you to our partner network, and a Tech Lead owns your queue."</p>
+      </div>
+    </div>
+
+    <div class="gloss-card">
+      <h4>Per-store add-on · $50–100/mo each</h4>
+      <p class="lead">Empire-only pricing model — linear by store count once you cross 3 stores.</p>
+      <div class="ladder">
+        <div class="ladder-row"><span class="ladder-tier">Scale $299</span><span class="ladder-val">1 store · 1,600 credits/mo</span></div>
+        <div class="ladder-row"><span class="ladder-tier">Dominate $499</span><span class="ladder-val">Up to 3 stores bundled · 1,600 credits per store (separate pools)</span></div>
+        <div class="ladder-row"><span class="ladder-tier">Empire</span><span class="ladder-val">Base custom + <strong>$50–100/mo per additional store</strong>. Each add-on has its own 1,600-credit pool. Range gives volume discount: 5 stores ≈ $100/store, 30 stores ≈ $50/store</span></div>
+      </div>
+      <div class="say">
+        <span class="say-label">Say it to a Plus merchant</span>
+        <p class="say-text">"Add a store, add a credit pool. The 6th store doesn't share credits with the 1st — each one stands on its own. As volume grows, per-store cost drops."</p>
+      </div>
+    </div>
+
+    <div class="gloss-card">
+      <h4>White-glove onboarding & training</h4>
+      <p class="lead">Empire-only — handhold the merchant team to "first value" instead of self-serve docs.</p>
+      <div class="ladder">
+        <div class="ladder-row"><span class="ladder-tier">Scale</span><span class="ladder-val">Self-serve onboarding + 24/7 chat support</span></div>
+        <div class="ladder-row"><span class="ladder-tier">Dominate</span><span class="ladder-val">Named PIC + ASAP queue · 1:1 setup help</span></div>
+        <div class="ladder-row"><span class="ladder-tier">Empire</span><span class="ladder-val">Dedicated kick-off (PageFly team on calls) · custom training sessions for merchant's design + dev team · documented playbook for their stores · ongoing knowledge transfer</span></div>
+      </div>
+      <div class="say">
+        <span class="say-label">Say it to a Plus merchant</span>
+        <p class="say-text">"We don't drop you into docs. We run the kick-off, train your team on your own stack, build the playbook in your tone, and stay on calls until your team owns it."</p>
+      </div>
+    </div>
+
+  </div>
+  <p class="legend" style="margin-top: 8px;">Note · "Custom contract + invoice billing" intentionally not in Empire scope yet — billing rails not built. Revisit in v2 once procurement/finance side ready.</p>
+
+  <div class="next">
+    <h3>Next steps for v2</h3>
+    <ol>
+      <li><strong>Validate price band.</strong> Talk to 5 Power merchants &gt; $1M GMV — what would they pay for the service layer? (Tony to source from Shopify Affiliate referrals)</li>
+      <li><strong>Define the GMV bands.</strong> $499 / $999 / $1,999 — pick break points based on AI credit cost + CSM cost per band.</li>
+      <li><strong>Build the proof bank.</strong> H to pull 3 case studies with documented CVR lift; this becomes Section 3 row 5 evidence.</li>
+      <li><strong>Map upsell triggers.</strong> When does a Power merchant get the PFE intro? In-app banner at $X GMV? Manual outreach via Sales Hunter?</li>
+      <li><strong>Test the pitch.</strong> Run the 5 customer pitches above against 3 Plus merchants in a sales conversation — measure resonance per pillar.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>
