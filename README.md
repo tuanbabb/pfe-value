@@ -6,7 +6,7 @@ Pricing card mockup iterations + supporting strategy docs for **PageFly Enterpri
 
 | Version | Link | Date |
 |---------|------|------|
-| **v10 (latest)** | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v10.html) | 08-05-2026 |
+| **v10 (latest)** | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v10.html) | 11-05-2026 |
 | v9 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v9.html) | 08-05-2026 |
 | v8 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v8.html) | 07-05-2026 |
 | v5 | [Open mockup](https://tuanbabb.github.io/pfe-value/PFE-Pricing-Card-Mockup-v5.html) | 06-05-2026 |
@@ -19,6 +19,7 @@ Pricing card mockup iterations + supporting strategy docs for **PageFly Enterpri
 
 | File | Purpose |
 |------|---------|
+| [PFE-Pricing-Framework-v1.md](PFE-Pricing-Framework-v1.md) | Pricing framework for "Talk to us about Empire" — email template + custom-quote computation logic (11-05-2026) |
 | [PFE-Roadmap-Backlog.xlsx](PFE-Roadmap-Backlog.xlsx) | Backlog & roadmap for PFE features (latest update 08-05-2026) |
 | [Shopify-Plus-Merchants-Pain-Points-Analysis.md](Shopify-Plus-Merchants-Pain-Points-Analysis.md) | Competitor + pain-point research, now with PFE Buy Probability column |
 | [H-Pain-Points-Methodology.md](H-Pain-Points-Methodology.md) | Methodology brief for H — how we identify & prioritize merchant pain points |
