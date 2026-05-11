@@ -281,6 +281,95 @@ type EmpireQuoteOutput = {
 
 ---
 
+## 8. Dominate inquiry flow (manual setup)
+
+**Why a separate flow:** Dominate is fixed-price $499/mo with up to 3 stores. Multi-store billing rails aren't automated yet, so the "Choose Dominate" CTA opens a **mailto** to Tony for manual setup — same UX pattern as Empire but with a setup-focused (not custom-quote) email body.
+
+**Subject:** `Dominate plan inquiry | {shop_domain}` (auto-fill, ví dụ `tuanba.myshopify.com`)
+
+**Body:**
+
+```
+Hi Tony,
+
+I'd like to start the Dominate plan ($499/mo) for my brand. Since multi-store setup is handled manually right now, here's the info to get me onboarded.
+
+—— STORES TO BUNDLE (up to 3 total) ——
+• Primary store URL: {shop_domain}
+• Additional store URL #1:
+• Additional store URL #2:
+• Credit pool model: □ Separate per-store (default)   □ Share across stores
+
+—— ABOUT US ——
+• Brand / niche:
+• Approx. monthly revenue range:
+  □ $200k–$1M   □ $1M–$5M   □ $5M+
+• Primary day-to-day PageFly user(s) — name + role:
+
+—— FOUNDER'S OFFICE HOURS (2/mo · 45-min async review by Tony · email + Loom, no call) ——
+• Which store do you want Tony to review first?:
+• #1 question or hypothesis you want Tony to dig into:
+• When do you want the first review? □ ASAP   □ Specific date: _____
+
+—— ONBOARDING ——
+• Current Shopify Plus rollout stage:
+  □ Just launched   □ <6 months on Plus   □ 6–18 months   □ 18+ months
+• Anything specific I should know before kickoff (current tools, design system, deadline):
+
+—— COMMERCIAL ——
+• Contract preference: □ Monthly $499   □ Annual (~15% off)   □ Discuss
+• Start timeline:
+  □ ASAP (within 7 days)   □ Within 30 days   □ Within 90 days
+
+—— ANYTHING ELSE ——
+<Free-form>
+
+Best,
+[Your name] / [Your role]
+```
+
+### Dominate inquiry action mapping
+
+| Info merchant fill | Action Tony take |
+|---|---|
+| Additional store URLs | Provision each store in PageFly admin, link to Mantle subscription, configure separate credit pools |
+| Credit pool model | If shared → set pool aggregation; if separate (default) → ensure each store gets its own 1,600/mo pool |
+| Revenue range | Sanity check fit — if <$200k, suggest Scale instead (Dominate features may overshoot need) |
+| Founder's Office Hours first focus | Schedule the first async review slot (2/mo capacity), prep AI Audit on the named store |
+| Onboarding stage | Tailor kickoff materials — newly-launched Plus needs more handholding; mature Plus skips basics |
+| Contract preference | Apply ~15% annual discount if Annual; lock terms; send Shopify Billing test charge for primary store + manual invoices/credit allocation for other 2 |
+| Start timeline | ASAP → onboard within 24h; 30d → schedule kickoff; 90d → put on nurture, send PFE case study |
+
+---
+
+## 9. Modal recommendation UX (mockup v10.1)
+
+**Visual hierarchy now pushes Scale, not Dominate:**
+- **Scale** column has the green `.featured` card class + green primary button. Badge changes from "Entry tier" → **"⭐ Recommended start"**.
+- **Dominate** column drops to default white card + outline ("talk") button. Badge stays "Most chosen" (factual social proof, doesn't conflict with the Scale recommendation).
+- **Empire** stays gold/yellow `.empire` class + outline button.
+
+**Why push Scale first:**
+- Lowest commitment ($299 vs $499) → faster onboarding decision.
+- 1 store → Tony auto-provisions via Shopify Billing, no manual multi-store work.
+- Once a merchant is on Scale and seeing value, Dominate becomes an obvious upsell vs cold sell.
+- Reduces buyer's remorse / chargeback risk on the bigger tier.
+
+---
+
+## 10. Async wording rule (modal sub-cards)
+
+**Native-EN merchant test:** "Office Hours · 1 booking/mo · 45 min review" reads as a synchronous slot to Western tech ears (Stripe / Genius Bar precedent). Modal sub-card bullets now spell out async inline so it's obvious without scrolling to the hero card body.
+
+| Old wording | New wording |
+|---|---|
+| `Founder's Office Hours: 1 booking/mo (45 min async review)` | `Founder's Office Hours · 1/mo · 45-min async review (email + Loom, no call)` |
+| `Founder's Office Hours: 2 bookings/mo (45 min async review/each)` | `Founder's Office Hours · 2/mo · 45-min async review each (email + Loom, no call)` |
+| `Tech Lead reviews 1:1 (named owner) · ASAP queue` (Dominate) | `Coming soon · Tech Lead reviews 1:1 (named owner)` |
+
+---
+
 ## Changelog
 
+- **v1.1 (2026-05-11, afternoon)** — Native-EN feedback: spell out "45-min async review (email + Loom, no call)" in modal sub-card bullets so async nature is clear without scrolling (Section 10). Tech Lead 1:1 on Dominate prefixed "Coming soon ·" until role lands. Empire bullets: drop "Add-ons: $50–100/mo each", add "Co-authored product roadmap + QBR cadence" + "Partner network introductions". Modal recommendation flipped to push Scale (Section 9). Dominate CTA → mailto for manual setup (Section 8).
 - **v1 (2026-05-11)** — Initial framework. Email template, formula, lookup tables, sanity rules, action mapping, example reply.
