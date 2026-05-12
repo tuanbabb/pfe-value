@@ -4,375 +4,555 @@
 <meta charset="UTF-8">
 <title>PageFly Pricing — v11 (Scale / Dominate / Empire)</title>
 <style>
+  /* ==== Polaris tokens (approximate, matched to @shopify/polaris v12+) ==== */
+  :root {
+    /* Surface / fill */
+    --p-color-bg: #f1f1f1;
+    --p-color-bg-surface: #ffffff;
+    --p-color-bg-surface-secondary: #fafafa;
+    --p-color-bg-fill-secondary: #f1f1f1;
+    --p-color-bg-fill-success-secondary: #e3f5ec;
+    --p-color-bg-fill-success-tertiary: #cdfee1;
+    --p-color-bg-fill-warning-secondary: #fff1d3;
+    --p-color-bg-fill-info-secondary: #ebf2ff;
+    --p-color-bg-fill-brand-disabled: #f1f1f1;
+
+    /* Text */
+    --p-color-text: #303030;
+    --p-color-text-secondary: #616161;
+    --p-color-text-subdued: #8a8a8a;
+    --p-color-text-success: #0c5132;
+    --p-color-text-warning: #663f17;
+    --p-color-text-link: #005bd3;
+    --p-color-text-inverse: #ffffff;
+
+    /* Border */
+    --p-color-border: #e3e3e3;
+    --p-color-border-strong: #cccccc;
+    --p-color-border-success: #29845a;
+    --p-color-border-warning: #b6841f;
+
+    /* Brand (action) */
+    --p-color-bg-fill-success: #008060;
+    --p-color-bg-fill-success-hover: #005e46;
+    --p-color-bg-fill-brand: #303030;
+    --p-color-bg-fill-brand-hover: #1a1a1a;
+
+    /* Radius */
+    --p-border-radius-100: 4px;
+    --p-border-radius-200: 8px;
+    --p-border-radius-300: 12px;
+    --p-border-radius-400: 16px;
+    --p-border-radius-full: 9999px;
+
+    /* Shadow */
+    --p-shadow-100: 0 1px 0 rgba(26, 26, 26, 0.05);
+    --p-shadow-200: 0 1px 0 rgba(0, 0, 0, 0.05), 0 1px 2px rgba(26, 26, 26, 0.08);
+    --p-shadow-300: 0 4px 6px -2px rgba(26, 26, 26, 0.06), 0 2px 4px -2px rgba(26, 26, 26, 0.06);
+    --p-shadow-400: 0 6px 16px rgba(26, 26, 26, 0.10);
+
+    /* Type — Polaris uses Inter / system-ui */
+    --p-font-family-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --p-font-weight-regular: 450;
+    --p-font-weight-medium: 550;
+    --p-font-weight-semibold: 650;
+    --p-font-weight-bold: 700;
+
+    /* Space */
+    --p-space-100: 4px;
+    --p-space-200: 8px;
+    --p-space-300: 12px;
+    --p-space-400: 16px;
+    --p-space-500: 20px;
+    --p-space-600: 24px;
+    --p-space-800: 32px;
+    --p-space-1000: 40px;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
-    background: #f6f6f7;
-    padding: 40px 20px;
-    color: #1a1a1a;
+    font-family: var(--p-font-family-sans);
+    background: var(--p-color-bg);
+    color: var(--p-color-text);
+    font-size: 13px;
+    line-height: 1.4;
+    padding: var(--p-space-1000) var(--p-space-500);
   }
   .container { max-width: 1500px; margin: 0 auto; }
 
-  /* Header */
-  .header { text-align: center; margin-bottom: 32px; }
+  /* ==== Header ==== */
+  .header { text-align: center; margin-bottom: var(--p-space-800); }
   .header .topbadge {
     display: inline-block;
-    background: #f0f5ff;
-    color: #5b3cdc;
+    background: var(--p-color-bg-fill-info-secondary);
+    color: #1a3d92;
     padding: 4px 12px;
-    border-radius: 12px;
+    border-radius: var(--p-border-radius-full);
     font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 12px;
+    font-weight: var(--p-font-weight-medium);
+    margin-bottom: var(--p-space-300);
   }
-  .header h1 { font-size: 32px; font-weight: 600; margin-bottom: 12px; }
-  .header .subtitle { color: #6b7177; font-size: 14px; max-width: 780px; margin: 0 auto 14px; line-height: 1.5; }
+  .header h1 {
+    font-size: 32px;
+    font-weight: var(--p-font-weight-bold);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--p-space-300);
+    color: var(--p-color-text);
+  }
+  .header .subtitle {
+    color: var(--p-color-text-secondary);
+    font-size: 14px;
+    max-width: 780px;
+    margin: 0 auto var(--p-space-400);
+    line-height: 1.5;
+  }
   .header .trust-row {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: var(--p-space-500);
     font-size: 13px;
-    color: #6b7177;
+    color: var(--p-color-text-secondary);
     flex-wrap: wrap;
-    margin-bottom: 6px;
+    margin-bottom: var(--p-space-200);
   }
-  .header .trust-row .star { color: #ffb700; }
-  .header .trust-row strong { color: #1a1a1a; }
-  .header .nocard { font-size: 12px; color: #6b7177; }
+  .header .trust-row .star { color: #b6841f; }
+  .header .trust-row strong { color: var(--p-color-text); font-weight: var(--p-font-weight-semibold); }
+  .header .nocard { font-size: 12px; color: var(--p-color-text-subdued); }
   .header .meta-version {
     display: inline-block;
-    background: #fff3e0;
-    color: #b65500;
+    background: var(--p-color-bg-fill-warning-secondary);
+    color: var(--p-color-text-warning);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: var(--p-font-weight-semibold);
     padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: var(--p-border-radius-100);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-top: 12px;
+    margin-top: var(--p-space-300);
   }
 
-  /* Pricing grid */
+  /* ==== Pricing grid (5 plans) ==== */
   .pricing-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
+    gap: var(--p-space-400);
     align-items: stretch;
   }
   .tier {
-    background: white;
-    border: 1px solid #e3e5e7;
-    border-radius: 12px;
-    padding: 24px 18px;
+    background: var(--p-color-bg-surface);
+    border: 1px solid var(--p-color-border);
+    border-radius: var(--p-border-radius-300);
+    padding: var(--p-space-600) var(--p-space-500);
     display: flex;
     flex-direction: column;
     position: relative;
+    box-shadow: var(--p-shadow-100);
   }
-  .tier.popular { border-color: #c9d8ff; background: linear-gradient(180deg, #f0f5ff 0%, white 30%); }
-  .tier.power { border-color: #d1fadf; background: linear-gradient(180deg, #ecfdf3 0%, white 30%); }
-  .badge-popular { position: absolute; top: 10px; right: 14px; background: #c9d8ff; color: #2851a3; font-size: 10.5px; font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
-  .badge-best { position: absolute; top: 10px; right: 14px; background: #d1fadf; color: #1a6b3f; font-size: 10.5px; font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
-  .tier-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-  .tier-tagline { font-size: 12.5px; color: #6b7177; margin-bottom: 16px; min-height: 28px; line-height: 1.4; }
-  .tier-price { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
-  .tier-price .month { font-size: 13px; color: #6b7177; font-weight: 400; }
-  .tier-day { font-size: 11px; color: #6b7177; margin-bottom: 14px; }
-  .selector { background: #f6f6f7; border: 1px solid #e3e5e7; border-radius: 6px; padding: 8px 12px; font-size: 12px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
-  .cta { background: #1a1a1a; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 18px; width: 100%; }
-  .cta.disabled { background: #e3e5e7; color: #6b7177; cursor: not-allowed; }
-
-  .features-title { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7177; margin-bottom: 6px; margin-top: 12px; }
-  .feature { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.4; margin-bottom: 5px; color: #1a1a1a; }
-  .feature::before { content: "✓"; color: #008060; font-weight: 700; flex-shrink: 0; }
-  .feature.preview::after { content: "Upcoming"; background: #f6f6f7; color: #6b7177; font-size: 9.5px; font-weight: 500; padding: 1px 5px; border-radius: 3px; margin-left: auto; align-self: center; }
-
-  .power-pfe-link {
-    margin-top: 16px;
-    padding: 10px 12px;
-    background: white;
-    border: 1px dashed #008060;
-    border-radius: 6px;
-    text-align: center;
-  }
-  .power-pfe-link a { color: #008060; text-decoration: none; font-size: 12px; font-weight: 600; }
-  .power-pfe-link a:hover { text-decoration: underline; }
-
-  /* TRANSITION STRIP — minimal */
-  .transition-strip {
-    margin-top: 56px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  .transition-strip .pre-title {
-    display: inline-block;
-    background: #1a3d2c;
-    color: white;
-    padding: 6px 16px;
-    border-radius: 16px;
-    font-size: 11.5px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 14px;
-  }
-  .transition-strip h2 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #1a1a1a;
-  }
-  .transition-strip h2 .highlight { color: #008060; }
-
-  /* PFE SECTION — clean, symmetric, no empty space */
-  #pfe-section {
-    background: white;
-    border: 2px solid #5fb37b;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 8px 24px rgba(95, 179, 123, 0.18);
-    scroll-margin-top: 20px;
-  }
-
-  .pfe-hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    align-items: stretch;
-  }
-
-  /* LEFT — pricing block */
-  .pfe-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .pfe-left h2 { font-size: 26px; margin-bottom: 4px; }
-  .pfe-left .pfe-tagline {
-    color: #008060;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 18px;
-  }
-  .pfe-price-block {
-    background: linear-gradient(135deg, #ecfdf3 0%, #d1fadf 100%);
-    padding: 22px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-  }
-  .pfe-price { font-size: 38px; font-weight: 700; margin-bottom: 4px; }
-  .pfe-price .mo { font-size: 14px; color: #6b7177; font-weight: 400; }
-  .pfe-price-sub { font-size: 12.5px; color: #1a6b3f; margin-bottom: 12px; }
-  .pfe-credits-pill {
-    display: inline-block;
-    background: white;
-    color: #1a6b3f;
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .pfe-credits-note {
-    font-size: 11.5px;
-    color: #4a6b59;
-    margin-top: 6px;
+  .tier.popular { border-color: #b3d4ff; box-shadow: 0 0 0 1px #b3d4ff inset, var(--p-shadow-100); }
+  .tier.power { border-color: var(--p-color-border-success); box-shadow: 0 0 0 1px var(--p-color-border-success) inset, var(--p-shadow-100); }
+  .tier .badge-row { display: flex; gap: 6px; margin-bottom: var(--p-space-300); min-height: 22px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--p-border-radius-full);
+    font-size: 11px;
+    font-weight: var(--p-font-weight-semibold);
     line-height: 1.4;
   }
-  .pfe-cta {
-    background: #008060;
-    color: white;
+  .badge.info { background: var(--p-color-bg-fill-info-secondary); color: #1a3d92; }
+  .badge.success { background: var(--p-color-bg-fill-success-tertiary); color: var(--p-color-text-success); }
+  .badge.warning { background: var(--p-color-bg-fill-warning-secondary); color: var(--p-color-text-warning); }
+  .tier-name {
+    font-size: 18px;
+    font-weight: var(--p-font-weight-semibold);
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+  .tier-tagline {
+    font-size: 13px;
+    color: var(--p-color-text-secondary);
+    margin-bottom: var(--p-space-400);
+    min-height: 36px;
+    line-height: 1.4;
+  }
+  .tier-price {
+    font-size: 32px;
+    font-weight: var(--p-font-weight-bold);
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+  }
+  .tier-price .month { font-size: 13px; color: var(--p-color-text-secondary); font-weight: var(--p-font-weight-regular); }
+  .tier-day { font-size: 12px; color: var(--p-color-text-subdued); margin-bottom: var(--p-space-400); }
+  .selector {
+    background: var(--p-color-bg-surface);
+    border: 1px solid var(--p-color-border);
+    border-radius: var(--p-border-radius-200);
+    padding: 8px 12px;
+    font-size: 12px;
+    margin-bottom: var(--p-space-400);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--p-color-text);
+  }
+  .selector .caret { color: var(--p-color-text-subdued); font-size: 10px; }
+
+  /* Polaris-style buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
+    border-radius: var(--p-border-radius-200);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: var(--p-font-weight-semibold);
+    cursor: pointer;
+    transition: background-color 0.1s ease, box-shadow 0.1s ease;
+    font-family: inherit;
+    line-height: 1.2;
+    width: 100%;
+    margin-bottom: var(--p-space-400);
+  }
+  .btn-primary {
+    background: var(--p-color-bg-fill-brand);
+    color: var(--p-color-text-inverse);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2);
+  }
+  .btn-primary:hover { background: var(--p-color-bg-fill-brand-hover); }
+  .btn-success {
+    background: var(--p-color-bg-fill-success);
+    color: var(--p-color-text-inverse);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2);
+  }
+  .btn-success:hover { background: var(--p-color-bg-fill-success-hover); }
+  .btn-secondary {
+    background: var(--p-color-bg-surface);
+    color: var(--p-color-text);
+    border: 1px solid var(--p-color-border);
+    box-shadow: var(--p-shadow-100);
+  }
+  .btn-secondary:hover { background: var(--p-color-bg-surface-secondary); }
+  .btn-secondary-success {
+    background: var(--p-color-bg-surface);
+    color: var(--p-color-bg-fill-success);
+    border: 1px solid var(--p-color-bg-fill-success);
+  }
+  .btn-secondary-success:hover { background: var(--p-color-bg-fill-success-secondary); }
+  .btn[disabled], .btn.disabled {
+    background: var(--p-color-bg-fill-brand-disabled);
+    color: var(--p-color-text-subdued);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .features-title {
+    font-size: 11px;
+    font-weight: var(--p-font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--p-color-text-subdued);
+    margin-bottom: var(--p-space-200);
+    margin-top: var(--p-space-300);
+  }
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--p-space-200);
+    font-size: 13px;
+    line-height: 1.45;
+    margin-bottom: 6px;
+    color: var(--p-color-text);
+  }
+  .feature::before {
+    content: "✓";
+    color: var(--p-color-bg-fill-success);
+    font-weight: var(--p-font-weight-bold);
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+  .feature.preview { justify-content: space-between; }
+  .feature.preview::after {
+    content: "Upcoming";
+    background: var(--p-color-bg-fill-secondary);
+    color: var(--p-color-text-secondary);
+    font-size: 10px;
+    font-weight: var(--p-font-weight-medium);
+    padding: 1px 6px;
+    border-radius: var(--p-border-radius-full);
+    margin-left: auto;
+    align-self: center;
+  }
+
+  .power-pfe-link {
+    margin-top: var(--p-space-400);
+    padding: 10px 12px;
+    background: var(--p-color-bg-fill-success-secondary);
+    border: 1px solid var(--p-color-border-success);
+    border-radius: var(--p-border-radius-200);
+    text-align: center;
+  }
+  .power-pfe-link a {
+    color: var(--p-color-text-success);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: var(--p-font-weight-semibold);
+  }
+  .power-pfe-link a:hover { text-decoration: underline; }
+
+  /* ==== Transition strip ==== */
+  .transition-strip { margin-top: 64px; margin-bottom: var(--p-space-500); text-align: center; }
+  .transition-strip .pre-title {
+    display: inline-block;
+    background: var(--p-color-text-success);
+    color: var(--p-color-text-inverse);
+    padding: 6px 16px;
+    border-radius: var(--p-border-radius-full);
+    font-size: 11px;
+    font-weight: var(--p-font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: var(--p-space-400);
+  }
+  .transition-strip h2 { font-size: 28px; font-weight: var(--p-font-weight-bold); letter-spacing: -0.01em; }
+  .transition-strip h2 .highlight { color: var(--p-color-bg-fill-success); }
+
+  /* ==== PFE hero card ==== */
+  #pfe-section {
+    background: var(--p-color-bg-surface);
+    border: 1px solid var(--p-color-border-success);
+    border-radius: var(--p-border-radius-400);
+    padding: var(--p-space-800);
+    box-shadow: var(--p-shadow-300);
+    scroll-margin-top: 20px;
+  }
+  .pfe-hero { display: grid; grid-template-columns: 1fr 1fr; gap: var(--p-space-800); align-items: stretch; }
+  .pfe-left { display: flex; flex-direction: column; justify-content: center; }
+  .pfe-left h2 { font-size: 24px; font-weight: var(--p-font-weight-semibold); margin-bottom: 2px; letter-spacing: -0.005em; }
+  .pfe-tagline { color: var(--p-color-text-success); font-size: 14px; font-weight: var(--p-font-weight-medium); margin-bottom: var(--p-space-500); }
+  .pfe-price-block {
+    background: var(--p-color-bg-fill-success-secondary);
+    padding: var(--p-space-600);
+    border-radius: var(--p-border-radius-300);
+    margin-bottom: var(--p-space-500);
+    border: 1px solid var(--p-color-bg-fill-success-tertiary);
+  }
+  .pfe-price { font-size: 36px; font-weight: var(--p-font-weight-bold); margin-bottom: 4px; letter-spacing: -0.015em; }
+  .pfe-price .mo { font-size: 14px; color: var(--p-color-text-secondary); font-weight: var(--p-font-weight-regular); }
+  .pfe-price-sub { font-size: 13px; color: var(--p-color-text-success); margin-bottom: var(--p-space-300); }
+  .pfe-credits-pill {
+    display: inline-block;
+    background: var(--p-color-bg-surface);
+    color: var(--p-color-text-success);
+    padding: 4px 12px;
+    border-radius: var(--p-border-radius-full);
+    font-size: 12px;
+    font-weight: var(--p-font-weight-semibold);
+    border: 1px solid var(--p-color-bg-fill-success-tertiary);
+  }
+  .pfe-credits-note { font-size: 12px; color: var(--p-color-text-success); margin-top: var(--p-space-200); line-height: 1.5; }
+  .pfe-cta {
+    background: var(--p-color-bg-fill-success);
+    color: var(--p-color-text-inverse);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--p-border-radius-200);
+    font-size: 14px;
+    font-weight: var(--p-font-weight-semibold);
     cursor: pointer;
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: var(--p-space-200);
+    font-family: inherit;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2);
   }
-  .pfe-cta-note { font-size: 11.5px; color: #6b7177; text-align: center; }
+  .pfe-cta:hover { background: var(--p-color-bg-fill-success-hover); }
+  .pfe-cta-note { font-size: 12px; color: var(--p-color-text-secondary); text-align: center; }
 
-  /* RIGHT — 3 outcome blocks (compact) */
-  .pfe-right {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    justify-content: center;
-  }
+  .pfe-right { display: flex; flex-direction: column; gap: var(--p-space-300); justify-content: center; }
   .outcome {
-    background: #f9faf9;
-    border: 1px solid #d1fadf;
-    border-radius: 8px;
-    padding: 14px 16px;
-    transition: all 0.15s;
+    background: var(--p-color-bg-surface);
+    border: 1px solid var(--p-color-border);
+    border-radius: var(--p-border-radius-200);
+    padding: var(--p-space-400);
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .outcome:hover {
-    background: white;
-    border-color: #5fb37b;
-    box-shadow: 0 2px 8px rgba(95,179,123,0.15);
-  }
-  .outcome .outcome-title {
+  .outcome:hover { border-color: var(--p-color-bg-fill-success); box-shadow: var(--p-shadow-200); }
+  .outcome-title {
     font-size: 14px;
-    font-weight: 600;
-    color: #1a6b3f;
+    font-weight: var(--p-font-weight-semibold);
+    color: var(--p-color-text-success);
     margin-bottom: 4px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--p-space-200);
   }
-  .outcome .outcome-body {
-    font-size: 12.5px;
-    color: #4a4a4a;
-    line-height: 1.55;
-  }
-  .outcome .outcome-body strong {
-    color: #1a1a1a;
-    font-weight: 600;
-  }
-  .outcome .outcome-body em {
-    font-style: normal;
-    color: #1a6b3f;
-    font-weight: 500;
-  }
+  .outcome-body { font-size: 13px; color: var(--p-color-text-secondary); line-height: 1.55; }
+  .outcome-body strong { color: var(--p-color-text); font-weight: var(--p-font-weight-semibold); }
+  .outcome-body em { font-style: normal; color: var(--p-color-text-success); font-weight: var(--p-font-weight-medium); }
 
-  /* PROGRESSIVE DISCLOSURE — accordion features */
-  .pfe-details {
-    margin-top: 20px;
-    border-top: 1px solid #e3e5e7;
-    padding-top: 16px;
-  }
+  /* ==== Accordion / detail features ==== */
+  .pfe-details { margin-top: var(--p-space-500); border-top: 1px solid var(--p-color-border); padding-top: var(--p-space-400); }
   .pfe-details-toggle {
     background: none;
     border: none;
-    color: #008060;
+    color: var(--p-color-text-link);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: var(--p-font-weight-semibold);
     cursor: pointer;
-    padding: 8px 0;
+    padding: var(--p-space-200) 0;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--p-space-200);
     width: 100%;
     text-align: left;
+    font-family: inherit;
   }
-  .pfe-details-toggle .chevron {
-    transition: transform 0.2s;
-    display: inline-block;
-  }
+  .pfe-details-toggle .chevron { transition: transform 0.15s; display: inline-block; font-size: 11px; }
   .pfe-details-toggle.open .chevron { transform: rotate(90deg); }
-  .pfe-details-content {
-    display: none;
-    padding-top: 16px;
-  }
+  .pfe-details-content { display: none; padding-top: var(--p-space-400); }
   .pfe-details-content.open { display: block; }
-  .pfe-features-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 24px;
-  }
-  .pfe-feature {
-    display: flex;
-    gap: 8px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #1a1a1a;
-  }
-  .pfe-feature::before { content: "✓"; color: #008060; font-weight: 700; flex-shrink: 0; }
+  .pfe-features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px var(--p-space-600); }
+  .pfe-feature { display: flex; gap: var(--p-space-200); font-size: 13px; line-height: 1.5; color: var(--p-color-text); align-items: flex-start; }
+  .pfe-feature::before { content: "✓"; color: var(--p-color-bg-fill-success); font-weight: var(--p-font-weight-bold); flex-shrink: 0; }
 
-  /* MODAL */
+  /* ==== Modal ==== */
   .modal-backdrop {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.55);
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.45);
     display: none;
     align-items: center; justify-content: center;
-    z-index: 100; padding: 20px;
+    z-index: 100; padding: var(--p-space-500);
   }
   .modal-backdrop.active { display: flex; }
-  .modal { background: white; border-radius: 16px; max-width: 880px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; position: relative; }
-  .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7177; }
-  .modal h2 { font-size: 22px; margin-bottom: 6px; }
-  .modal-sub { color: #6b7177; font-size: 14px; margin-bottom: 18px; }
-  .scarcity-callout { background: #fff3e0; border: 1px solid #f8c97e; border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: #7a4d00; margin-bottom: 20px; }
-  .modal-options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  .modal-option { border: 1.5px solid #e3e5e7; border-radius: 12px; padding: 20px 18px; transition: all 0.15s; display: flex; flex-direction: column; }
-  .modal-option:hover { border-color: #5fb37b; box-shadow: 0 2px 8px rgba(95,179,123,0.15); }
-  .modal-option.featured { border-color: #5fb37b; background: #f0fdf4; }
-  .modal-option.scale { border-color: #d99a3d; background: #fef9ef; }
-  .modal-option.scale .opt-label { color: #b3781f; }
-  .modal-option.empire { border-color: #a47919; background: #fdf6e0; }
-  .modal-option.empire .opt-label { color: #a47919; }
-  .modal-option .opt-label { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #008060; margin-bottom: 6px; letter-spacing: 0.5px; }
-  .modal-option .opt-price { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-  .modal-option .opt-price .mo { font-size: 12px; color: #6b7177; font-weight: 400; }
-  .modal-option .opt-summary { font-size: 13px; color: #4a4a4a; line-height: 1.4; margin-bottom: 12px; }
-  .modal-option .opt-bullet { font-size: 12px; color: #1a1a1a; margin-bottom: 4px; padding-left: 14px; position: relative; display: flex; align-items: flex-start; gap: 4px; }
-  .modal-option .opt-bullet::before { content: "•"; position: absolute; left: 0; color: #008060; }
-  .modal-option .opt-cta { margin-top: auto; padding-top: 12px; }
-  .opt-cta button { width: 100%; padding: 10px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
-  .btn-buy { background: #008060; color: white; }
-  .btn-talk { background: white; color: #008060; border: 1.5px solid #008060 !important; }
-  .modal-form { background: #f6f6f7; padding: 20px; border-radius: 12px; margin-top: 16px; display: none; }
-  .modal-form.active { display: block; }
-  .modal-form h3 { font-size: 16px; margin-bottom: 4px; }
-  .modal-form .form-sub { font-size: 12px; color: #6b7177; margin-bottom: 14px; }
-  .form-row { margin-bottom: 12px; }
-  .form-row label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; color: #1a1a1a; }
-  .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 10px; border: 1px solid #e3e5e7; border-radius: 6px; font-size: 13px; font-family: inherit; }
-  .form-row textarea { min-height: 80px; resize: vertical; }
-  .form-cta { background: #008060; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px; margin-top: 8px; }
-  .form-note { font-size: 11px; color: #6b7177; text-align: center; margin-top: 10px; line-height: 1.5; }
-  .form-note strong { color: #008060; }
+  .modal {
+    background: var(--p-color-bg-surface);
+    border-radius: var(--p-border-radius-400);
+    max-width: 880px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    padding: var(--p-space-800);
+    position: relative;
+    box-shadow: var(--p-shadow-400);
+  }
+  .modal-close {
+    position: absolute;
+    top: var(--p-space-400); right: var(--p-space-400);
+    background: none; border: none;
+    font-size: 22px; cursor: pointer;
+    color: var(--p-color-text-secondary);
+    width: 28px; height: 28px;
+    border-radius: var(--p-border-radius-200);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: var(--p-color-bg-fill-secondary); color: var(--p-color-text); }
+  .modal h2 { font-size: 20px; font-weight: var(--p-font-weight-semibold); margin-bottom: 4px; letter-spacing: -0.005em; }
+  .modal-sub { color: var(--p-color-text-secondary); font-size: 13px; margin-bottom: var(--p-space-500); }
 
-  /* Founder tooltip (Empire bullet — Tony co-founder story) */
+  .scarcity-callout {
+    background: var(--p-color-bg-fill-warning-secondary);
+    border: 1px solid var(--p-color-border-warning);
+    border-radius: var(--p-border-radius-200);
+    padding: var(--p-space-300) var(--p-space-400);
+    font-size: 13px;
+    color: var(--p-color-text-warning);
+    margin-bottom: var(--p-space-500);
+    line-height: 1.5;
+  }
+  .scarcity-callout strong { font-weight: var(--p-font-weight-semibold); }
+
+  .modal-options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--p-space-400); margin-bottom: var(--p-space-500); }
+  .modal-option {
+    border: 1px solid var(--p-color-border);
+    border-radius: var(--p-border-radius-300);
+    padding: var(--p-space-500);
+    background: var(--p-color-bg-surface);
+    display: flex; flex-direction: column;
+    box-shadow: var(--p-shadow-100);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .modal-option:hover { border-color: var(--p-color-border-strong); box-shadow: var(--p-shadow-200); }
+  .modal-option.featured {
+    border-color: var(--p-color-bg-fill-success);
+    box-shadow: 0 0 0 1px var(--p-color-bg-fill-success) inset, var(--p-shadow-200);
+  }
+  .opt-header { display: flex; align-items: center; gap: 6px; margin-bottom: var(--p-space-200); flex-wrap: wrap; }
+  .opt-title { font-size: 16px; font-weight: var(--p-font-weight-semibold); color: var(--p-color-text); }
+  .opt-price {
+    font-size: 24px;
+    font-weight: var(--p-font-weight-bold);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .opt-price .mo { font-size: 13px; color: var(--p-color-text-secondary); font-weight: var(--p-font-weight-regular); }
+  .opt-summary { font-size: 13px; color: var(--p-color-text-secondary); line-height: 1.5; margin-bottom: var(--p-space-300); }
+  .opt-bullets { margin-bottom: var(--p-space-400); }
+  .opt-bullet {
+    font-size: 13px;
+    color: var(--p-color-text);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--p-space-200);
+    line-height: 1.5;
+  }
+  .opt-bullet::before {
+    content: "✓";
+    color: var(--p-color-bg-fill-success);
+    font-weight: var(--p-font-weight-bold);
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .opt-cta { margin-top: auto; }
+
+  /* Founder tooltip — Empire bullet */
   .tooltip-wrapper { position: relative; display: inline-flex; align-items: center; }
   .tooltip-icon {
     display: inline-flex;
-    width: 14px;
-    height: 14px;
+    width: 16px; height: 16px;
     border-radius: 50%;
-    background: #c9d4cf;
-    color: #1a6b3f;
-    font-size: 10px;
+    background: var(--p-color-bg-fill-secondary);
+    color: var(--p-color-text-secondary);
+    font-size: 11px;
+    align-items: center; justify-content: center;
+    font-weight: var(--p-font-weight-semibold);
+    font-family: Georgia, serif;
     font-style: italic;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
     cursor: help;
     margin-left: 6px;
     line-height: 1;
-    font-family: Georgia, serif;
   }
+  .tooltip-icon:hover { background: var(--p-color-border-strong); color: var(--p-color-text); }
   .tooltip-content {
     position: absolute;
-    bottom: 150%;
-    left: 50%;
+    bottom: calc(100% + 8px); left: 50%;
     transform: translateX(-50%);
-    background: #1a1a1a;
-    color: white;
-    padding: 12px 14px;
-    border-radius: 8px;
-    font-size: 11.5px;
-    line-height: 1.55;
+    background: var(--p-color-text);
+    color: var(--p-color-text-inverse);
+    padding: var(--p-space-300) var(--p-space-400);
+    border-radius: var(--p-border-radius-200);
+    font-size: 12px; line-height: 1.5;
     width: 280px;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.15s;
     z-index: 200;
-    font-weight: 400;
+    font-weight: var(--p-font-weight-regular);
     text-align: left;
+    box-shadow: var(--p-shadow-300);
   }
   .tooltip-content::after {
     content: '';
     position: absolute;
-    top: 100%;
-    left: 50%;
+    top: 100%; left: 50%;
     transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
-    border-color: #1a1a1a transparent transparent transparent;
+    border-width: 6px; border-style: solid;
+    border-color: var(--p-color-text) transparent transparent transparent;
   }
   .tooltip-wrapper:hover .tooltip-content,
   .tooltip-wrapper:focus-within .tooltip-content { opacity: 1; }
 
-  .footer-note { margin-top: 32px; text-align: center; color: #6b7177; font-size: 12px; }
+  .footer-note { margin-top: var(--p-space-800); text-align: center; color: var(--p-color-text-secondary); font-size: 12px; line-height: 1.6; }
+  .footer-note code { background: var(--p-color-bg-fill-secondary); padding: 1px 6px; border-radius: var(--p-border-radius-100); font-size: 11px; }
 </style>
 </head>
 <body>
@@ -390,55 +570,57 @@
       <span>✓ Built for Shopify</span>
     </div>
     <div class="nocard">No credit card required. Cancel anytime.</div>
-    <div class="meta-version">Mockup v11 · 2026-05-12 · AI Audit → PageFly Page Health Monitor · Priority Support added · Empire restructured</div>
+    <div class="meta-version">Mockup v11 · 2026-05-12 · Polaris-themed · Empire CTA opens mailto with framework template</div>
   </div>
 
-  <!-- STANDARD PRICING GRID (5 plans, exact in-app data) -->
+  <!-- STANDARD PRICING GRID -->
   <div class="pricing-grid">
 
     <!-- FREE -->
     <div class="tier">
+      <div class="badge-row"></div>
       <div class="tier-name">Free</div>
       <div class="tier-tagline">Try PageFly, see the value</div>
       <div class="tier-price">$0</div>
       <div class="tier-day">&nbsp;</div>
-      <button class="cta disabled">Downgrade</button>
+      <button class="btn btn-secondary disabled">Downgrade</button>
       <div class="features-title">AI Builder</div>
       <div class="feature">Smart pages (early users)</div>
       <div class="features-title">Builder</div>
-      <div class="feature">Drag & Drop</div>
+      <div class="feature">Drag &amp; Drop</div>
       <div class="feature">1 page or section</div>
-      <div class="feature">320+ page & section templates</div>
+      <div class="feature">320+ page &amp; section templates</div>
       <div class="feature">Option swatch</div>
       <div class="feature">Global styling</div>
-      <div class="feature">Unlimited media & font assets</div>
+      <div class="feature">Unlimited media &amp; font assets</div>
       <div class="features-title">AI Credits</div>
       <div class="feature">10 credits/month</div>
       <div class="features-title">CRO Modules</div>
       <div class="feature">Dashboard analytics</div>
       <div class="features-title">Integration</div>
       <div class="feature">200+ third party apps</div>
-      <div class="features-title">Services & Support</div>
+      <div class="features-title">Services &amp; Support</div>
       <div class="feature">Support 24/7</div>
     </div>
 
     <!-- BUILDER -->
     <div class="tier">
+      <div class="badge-row"></div>
       <div class="tier-name">Builder</div>
       <div class="tier-tagline">Launch pages that convert</div>
       <div class="tier-price">$24<span class="month">/month</span></div>
       <div class="tier-day">≈ $0.80/day</div>
-      <div class="selector">5 pages or sections <span>▼</span></div>
-      <button class="cta">Downgrade</button>
+      <div class="selector">5 pages or sections <span class="caret">▼</span></div>
+      <button class="btn btn-secondary">Downgrade</button>
       <div class="features-title">AI Builder</div>
       <div class="feature">Smart pages (early users)</div>
       <div class="features-title">Builder</div>
-      <div class="feature">Drag & Drop</div>
+      <div class="feature">Drag &amp; Drop</div>
       <div class="feature">5 pages or sections</div>
-      <div class="feature">320+ page & section templates</div>
+      <div class="feature">320+ page &amp; section templates</div>
       <div class="feature">Option swatch</div>
       <div class="feature">Global styling</div>
-      <div class="feature">Unlimited media & font assets</div>
+      <div class="feature">Unlimited media &amp; font assets</div>
       <div class="features-title">AI Credits</div>
       <div class="feature">80 credits/month</div>
       <div class="feature">Purchase extra credit packs</div>
@@ -446,27 +628,28 @@
       <div class="feature">Dashboard analytics</div>
       <div class="features-title">Integration</div>
       <div class="feature">200+ third party apps</div>
-      <div class="features-title">Services & Support</div>
+      <div class="features-title">Services &amp; Support</div>
       <div class="feature">Support 24/7</div>
     </div>
 
-    <!-- OPTIMIZE (Current Plan) -->
+    <!-- OPTIMIZE -->
     <div class="tier">
+      <div class="badge-row"><span class="badge info">Current plan</span></div>
       <div class="tier-name">Optimize</div>
-      <div class="tier-tagline">Test, learn & lift conversions</div>
+      <div class="tier-tagline">Test, learn &amp; lift conversions</div>
       <div class="tier-price">$69<span class="month">/month</span></div>
       <div class="tier-day">≈ $2.3/day</div>
-      <div class="selector">50 pages or sections <span>▼</span></div>
-      <button class="cta disabled">Current Plan</button>
+      <div class="selector">50 pages or sections <span class="caret">▼</span></div>
+      <button class="btn btn-secondary disabled">Current Plan</button>
       <div class="features-title">AI Builder</div>
       <div class="feature">Smart pages (early users)</div>
       <div class="features-title">Builder</div>
-      <div class="feature">Drag & Drop</div>
+      <div class="feature">Drag &amp; Drop</div>
       <div class="feature">50 pages or sections</div>
-      <div class="feature">320+ page & section templates</div>
+      <div class="feature">320+ page &amp; section templates</div>
       <div class="feature">Option swatch</div>
       <div class="feature">Global styling</div>
-      <div class="feature">Unlimited media & font assets</div>
+      <div class="feature">Unlimited media &amp; font assets</div>
       <div class="features-title">AI Credits</div>
       <div class="feature">260 credits/month</div>
       <div class="feature">Purchase extra credit packs</div>
@@ -477,27 +660,27 @@
       <div class="feature">A/B testing</div>
       <div class="features-title">Integration</div>
       <div class="feature">200+ third party apps</div>
-      <div class="features-title">Services & Support</div>
+      <div class="features-title">Services &amp; Support</div>
       <div class="feature">Support 24/7</div>
     </div>
 
-    <!-- ACCELERATE (Most popular) -->
+    <!-- ACCELERATE -->
     <div class="tier popular">
-      <div class="badge-popular">Most popular</div>
+      <div class="badge-row"><span class="badge info">Most popular</span></div>
       <div class="tier-name">Accelerate</div>
       <div class="tier-tagline">Full CRO suite — grow faster</div>
       <div class="tier-price">$99<span class="month">/month</span></div>
       <div class="tier-day">≈ $3.3/day</div>
-      <button class="cta">Accelerate Now</button>
+      <button class="btn btn-primary">Accelerate Now</button>
       <div class="features-title">AI Builder</div>
       <div class="feature">Smart pages (early users)</div>
       <div class="features-title">Builder</div>
-      <div class="feature">Drag & Drop</div>
+      <div class="feature">Drag &amp; Drop</div>
       <div class="feature">Unlimited pages or sections</div>
-      <div class="feature">320+ page & section templates</div>
+      <div class="feature">320+ page &amp; section templates</div>
       <div class="feature">Option swatch</div>
       <div class="feature">Global styling</div>
-      <div class="feature">Unlimited media & font assets</div>
+      <div class="feature">Unlimited media &amp; font assets</div>
       <div class="features-title">AI Credits</div>
       <div class="feature">400 credits/month</div>
       <div class="feature">Purchase extra credit packs</div>
@@ -511,27 +694,27 @@
       <div class="feature preview">User behavioral trigger</div>
       <div class="features-title">Integration</div>
       <div class="feature">200+ third party apps</div>
-      <div class="features-title">Services & Support</div>
+      <div class="features-title">Services &amp; Support</div>
       <div class="feature">Support 24/7</div>
     </div>
 
-    <!-- POWER (Best value) — anchor link to PFE -->
+    <!-- POWER -->
     <div class="tier power">
-      <div class="badge-best">Best value</div>
+      <div class="badge-row"><span class="badge success">Best value</span></div>
       <div class="tier-name">Power</div>
       <div class="tier-tagline">AI runs CRO on autopilot</div>
       <div class="tier-price">$199<span class="month">/month</span></div>
       <div class="tier-day">≈ $6.6/day</div>
-      <button class="cta">Go Power</button>
+      <button class="btn btn-success">Go Power</button>
       <div class="features-title">AI Builder</div>
       <div class="feature">Smart pages (early users)</div>
       <div class="features-title">Builder</div>
-      <div class="feature">Drag & Drop</div>
+      <div class="feature">Drag &amp; Drop</div>
       <div class="feature">Unlimited pages or sections</div>
-      <div class="feature">320+ page & section templates</div>
+      <div class="feature">320+ page &amp; section templates</div>
       <div class="feature">Option swatch</div>
       <div class="feature">Global styling</div>
-      <div class="feature">Unlimited media & font assets</div>
+      <div class="feature">Unlimited media &amp; font assets</div>
       <div class="features-title">AI Credits</div>
       <div class="feature">800 credits/month</div>
       <div class="feature">Purchase extra credit packs</div>
@@ -546,7 +729,7 @@
       <div class="feature preview">AI SmartSeller</div>
       <div class="features-title">Integration</div>
       <div class="feature">200+ third party apps</div>
-      <div class="features-title">Services & Support</div>
+      <div class="features-title">Services &amp; Support</div>
       <div class="feature">Support 24/7</div>
 
       <div class="power-pfe-link">
@@ -556,13 +739,13 @@
 
   </div>
 
-  <!-- TRANSITION STRIP — minimal, no body paragraph, no qualifier tags -->
+  <!-- TRANSITION STRIP -->
   <div class="transition-strip">
-    <div class="pre-title">For Shopify Plus & Multi-store Brands</div>
+    <div class="pre-title">For Shopify Plus &amp; Multi-store Brands</div>
     <h2>Need more than Power? Meet <span class="highlight">PageFly Enterprise (PFE)</span></h2>
   </div>
 
-  <!-- PFE SECTION — clean 2-col, equal height, progressive disclosure -->
+  <!-- PFE SECTION -->
   <div id="pfe-section">
     <div class="pfe-hero">
 
@@ -582,7 +765,7 @@
         <div class="pfe-cta-note">Tony reviews every request personally · Async reply within 5 days</div>
       </div>
 
-      <!-- RIGHT: 3 outcome blocks (compact, equal height, self-contained content) -->
+      <!-- RIGHT: 3 outcome blocks -->
       <div class="pfe-right">
         <div class="outcome">
           <div class="outcome-title">⚡ Build pages 2x faster</div>
@@ -601,7 +784,7 @@
       </div>
     </div>
 
-    <!-- PROGRESSIVE DISCLOSURE — accordion -->
+    <!-- Accordion -->
     <div class="pfe-details">
       <button class="pfe-details-toggle" onclick="toggleDetails(this)">
         <span class="chevron">›</span>
@@ -622,133 +805,232 @@
   </div>
 
   <div class="footer-note">
-    Mockup v11 · 2026-05-12 · For Tony Bui (Vanguard Team) · Tier names locked: <strong>Scale</strong> ($299) · <strong>Dominate</strong> ($499) · <strong>Empire</strong> (Custom) · Public ladder: Free → Builder → Optimize → Accelerate → Power → Scale → Dominate → Empire · Synced with in-app commit <code>950b0aa5a70</code>
+    Mockup v11 · 2026-05-12 · For Tony Bui (Vanguard Team) · Polaris-themed · Tier names locked:
+    <strong>Scale</strong> ($299) · <strong>Dominate</strong> ($499) · <strong>Empire</strong> (Custom) ·
+    Synced with in-app commit <code>950b0aa5a70</code>
   </div>
 </div>
 
-<!-- DYNAMIC PRICING MODAL -->
+<!-- ==== PRICING MODAL ==== -->
 <div class="modal-backdrop" id="pricing-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
     <h2>Find the right PFE for your brand</h2>
     <div class="modal-sub">Choose a starting bundle and proceed — or tell us about your goals if you need a custom setup.</div>
+
     <div class="scarcity-callout">
-      ⏰ <strong>Founder's Office Hours capacity: 5 merchants/week.</strong> Tony reviews submissions in arrival order. Start with Scale to enter the queue — plus get Page Health Monitor checking your store's health daily.
+      ⏰ <strong>Founder's Office Hours capacity: 5 merchants/week.</strong>
+      Tony reviews submissions in arrival order. Start with Scale to enter the queue — plus get Page Health Monitor checking your store's health daily.
     </div>
 
     <div class="modal-options">
+
+      <!-- SCALE -->
       <div class="modal-option featured">
-        <div class="opt-label">Scale · ⭐ Recommended start</div>
-        <div class="opt-price">$299<span class="mo">/mo</span></div>
+        <div class="opt-header">
+          <span class="opt-title">Scale</span>
+          <span class="badge success">Recommended start</span>
+        </div>
         <div class="opt-summary">Just hit Plus, scaling fast. Single store.</div>
-        <div class="opt-bullet">1,600 credits/mo for 1 store</div>
-        <div class="opt-bullet">Tech Lead ASAP queue</div>
-        <div class="opt-bullet">Priority Support · front of queue (PFE-only)</div>
-        <div class="opt-bullet">Founder's Office Hours — 1/mo · 45-min async review (email + Loom, no call)</div>
-        <div class="opt-bullet">PageFly Page Health Monitor</div>
+        <div class="opt-price">$299<span class="mo">/mo</span></div>
+        <div class="opt-bullets">
+          <div class="opt-bullet">1,600 credits/mo for 1 store</div>
+          <div class="opt-bullet">Tech Lead ASAP queue</div>
+          <div class="opt-bullet">Priority Support · front of queue (PFE-only)</div>
+          <div class="opt-bullet">Founder's Office Hours — 1/mo · 45-min async review (email + Loom, no call)</div>
+          <div class="opt-bullet">PageFly Page Health Monitor</div>
+        </div>
         <div class="opt-cta">
-          <button class="btn-buy" onclick="alert('Proceeding to checkout: Scale — $299/mo')">Choose Scale →</button>
+          <button class="btn btn-success" style="margin: 0;" onclick="alert('Proceeding to checkout: Scale — $299/mo')">Choose Scale →</button>
         </div>
       </div>
 
+      <!-- DOMINATE -->
       <div class="modal-option">
-        <div class="opt-label">Dominate · Most chosen</div>
-        <div class="opt-price">$499<span class="mo">/mo</span></div>
+        <div class="opt-header">
+          <span class="opt-title">Dominate</span>
+          <span class="badge success">Most chosen</span>
+        </div>
         <div class="opt-summary">Category leader, full add-on stack. Up to 3 stores.</div>
-        <div class="opt-bullet">1,600 credits/mo <strong>per store</strong> · separate pools</div>
-        <div class="opt-bullet">Up to 3 stores</div>
-        <div class="opt-bullet">Coming soon · Tech Lead 1:1 named owner</div>
-        <div class="opt-bullet">Priority Support · front of queue (PFE-only)</div>
-        <div class="opt-bullet">Founder's Office Hours — 2/mo · 45-min async review each (email + Loom, no call)</div>
-        <div class="opt-bullet">PageFly Page Health Monitor</div>
+        <div class="opt-price">$499<span class="mo">/mo</span></div>
+        <div class="opt-bullets">
+          <div class="opt-bullet">1,600 credits/mo <strong>per store</strong> · separate pools</div>
+          <div class="opt-bullet">Up to 3 stores</div>
+          <div class="opt-bullet">Coming soon · Tech Lead 1:1 named owner</div>
+          <div class="opt-bullet">Priority Support · front of queue (PFE-only)</div>
+          <div class="opt-bullet">Founder's Office Hours — 2/mo · 45-min async review each (email + Loom, no call)</div>
+          <div class="opt-bullet">PageFly Page Health Monitor</div>
+        </div>
         <div class="opt-cta">
-          <button class="btn-talk" onclick="alert('Opens mailto: tony@pagefly.io — multi-store setup is manually provisioned until automated 3-store billing rails ship')">Choose Dominate →</button>
+          <button class="btn btn-secondary" style="margin: 0;" onclick="openDominateInquiry()">Choose Dominate →</button>
         </div>
       </div>
 
-      <div class="modal-option empire">
-        <div class="opt-label">Empire · Endgame tier</div>
-        <div class="opt-price">Talk to us</div>
+      <!-- EMPIRE -->
+      <div class="modal-option">
+        <div class="opt-header">
+          <span class="opt-title">Empire</span>
+          <span class="badge warning">Endgame tier</span>
+        </div>
         <div class="opt-summary">Multi-store empire. Founder partnership, white-glove.</div>
-        <div class="opt-bullet">
-          <span style="display: inline-flex; align-items: center; flex-wrap: wrap;">
-            45-min monthly call with Tony, PageFly co-founder
-            <span class="tooltip-wrapper" tabindex="0">
-              <span class="tooltip-icon" aria-label="More info">i</span>
-              <span class="tooltip-content">Tony scaled PageFly from 0 to 10,000 active merchants in the early years — today we serve 200,000+ Shopify merchants. Your monthly call is direct access to the founder who's been running the playbook since 2017: early business model, growth tactics, what actually moved the needle.</span>
+        <div class="opt-price">Talk to us</div>
+        <div class="opt-bullets">
+          <div class="opt-bullet">
+            <span style="display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px;">
+              45-min monthly call with Tony, PageFly co-founder
+              <span class="tooltip-wrapper" tabindex="0">
+                <span class="tooltip-icon" aria-label="More info">i</span>
+                <span class="tooltip-content">Tony scaled PageFly from 0 to 10,000 active merchants in the early years — today we serve 200,000+ Shopify merchants. Your monthly call is direct access to the founder who's been running the playbook since 2017: early business model, growth tactics, what actually moved the needle.</span>
+              </span>
             </span>
-          </span>
+          </div>
+          <div class="opt-bullet">Priority Support · front of queue (PFE-only)</div>
+          <div class="opt-bullet">Coming soon · White-glove onboarding &amp; training</div>
+          <div class="opt-bullet">Custom AI Credits package</div>
+          <div class="opt-bullet">Custom volume pricing across all your stores</div>
         </div>
-        <div class="opt-bullet">Priority Support · front of queue (PFE-only)</div>
-        <div class="opt-bullet">Coming soon · White-glove onboarding &amp; training</div>
-        <div class="opt-bullet">Custom AI Credits package</div>
-        <div class="opt-bullet">Custom volume pricing across all your stores</div>
         <div class="opt-cta">
-          <button class="btn-talk" onclick="showForm()">Talk to us about Empire →</button>
+          <button class="btn btn-secondary-success" style="margin: 0;" onclick="openEmpireInquiry()">Talk to us about Empire →</button>
         </div>
       </div>
-    </div>
 
-    <div class="modal-form" id="modal-form">
-      <h3>Talk us about your goals</h3>
-      <div class="form-sub">Tony (co-founder) personally reviews every submission. You'll get a detailed email + short Loom recording within 5 business days. First submitted, first reviewed.</div>
-
-      <div class="form-row">
-        <label>Your store URL <span style="color:#d32f2f;">*</span></label>
-        <input type="text" placeholder="yourbrand.myshopify.com" />
-      </div>
-      <div class="form-row">
-        <label>How many Shopify stores do you run?</label>
-        <select>
-          <option>1 store</option>
-          <option>2-3 stores</option>
-          <option>4-10 stores</option>
-          <option>11+ stores (agency or large brand)</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label>What's your main goal with PFE?</label>
-        <select>
-          <option>Reduce downtime / get faster bug-fix</option>
-          <option>Scale page-build velocity (need more credits)</option>
-          <option>Manage multiple stores under one license</option>
-          <option>Migrate from Unlimited / Platinum to new pricing</option>
-          <option>Get ongoing feedback & strategy from your team</option>
-          <option>Other (tell us below)</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label>Anything else we should know? (optional)</label>
-        <textarea placeholder="What's your biggest blocker today? What would success look like 90 days from now?"></textarea>
-      </div>
-
-      <button class="form-cta" onclick="alert('Form submitted — sending to Tony directly. Expect Loom + email within 5 business days.')">Book my Founder's Office Hours →</button>
-      <div class="form-note">
-        💚 <strong>This goes directly to Tony Bui (co-founder)</strong>. <strong>5 merchants/week capacity.</strong> First submitted, first reviewed.
-      </div>
     </div>
   </div>
 </div>
 
 <script>
-  function openModal() {
-    document.getElementById('pricing-modal').classList.add('active');
-    document.getElementById('modal-form').classList.remove('active');
+  // Mailto recipient — single source of truth, mirrors pfeCardAndModal.tsx
+  const RECIPIENT = 'tony@pagefly.io';
+  // Mockup uses a placeholder shop domain since there's no Shopify session here.
+  const SHOP_DOMAIN = 'yourbrand.myshopify.com';
+
+  /**
+   * Empire mailto template — kept in sync with
+   * web/core/src/pages/embed/pages/preferences/pricing-summit/utils/empire-inquiry-mailto.ts
+   * If the React file changes, update this string too.
+   */
+  function buildEmpireBody(shopDomain) {
+    return [
+      'Hi Tony,',
+      '',
+      "I'm interested in PageFly Enterprise (PFE) Empire plan for my brand. Please use the inputs below to put a custom offer (with breakdown) in your reply.",
+      '',
+      '—— ABOUT US ——',
+      '• Store URL: ' + shopDomain,
+      '• Category / niche:',
+      '• Monthly revenue range:',
+      '  □ $50k–$200k   □ $200k–$1M   □ $1M–$5M   □ $5M+',
+      '• Stores you operate: __ now / __ planned in next 6 months',
+      '',
+      '—— VOLUME WE NEED ——',
+      '• Pages or sections published per month:',
+      '  □ <5   □ 5–20   □ 20–50   □ 50+',
+      '• AI credits per month (1,600 = ~1 store baseline):',
+      '  □ 1,600   □ 3–5k   □ 5–10k   □ 10k+',
+      '• Ready-to-use templates / custom design help per month:',
+      '  □ None   □ 1–5   □ 5–15   □ 15+',
+      '',
+      '—— SERVICE LEVEL ——',
+      "• Founder's Office Hours (async review by Tony — 45-min review, email + Loom, no call):",
+      '  □ 1/mo   □ 2/mo   □ 4/mo   □ Weekly',
+      '• Tech support level:',
+      '  □ ASAP queue   □ 1:1 named owner   □ Dedicated team   □ 24/7 SLA',
+      '• AI Audit cadence:',
+      '  □ Monthly   □ Bi-weekly   □ Weekly   □ On-demand',
+      '',
+      '—— TECHNICAL ——',
+      '• Credit pool model: □ Shared across stores   □ Separate per-store',
+      '• API access needed: □ Yes   □ Maybe   □ No',
+      '• White-label / agency mode: □ Yes   □ Maybe   □ No',
+      '• Custom integrations (CRM, ERP, headless, …):',
+      '',
+      '—— COMMERCIAL ——',
+      '• Preferred contract: □ Monthly   □ Annual (~15% off)   □ Multi-year',
+      '• Monthly budget ceiling:',
+      '  □ $500–1k   □ $1k–3k   □ $3k–10k   □ $10k+   □ Open',
+      '• Start timeline:',
+      '  □ ASAP   □ Within 30 days   □ Within 90 days   □ Exploring',
+      '',
+      '—— ANYTHING ELSE ——',
+      '<Free-form: specific outcome, compliance needs, anything you want me to dig into>',
+      '',
+      'Best,',
+      '[Your name] / [Your role]'
+    ].join('\n');
   }
-  function closeModal() {
-    document.getElementById('pricing-modal').classList.remove('active');
-    document.getElementById('modal-form').classList.remove('active');
+
+  /**
+   * Dominate mailto template — kept in sync with
+   * web/core/src/pages/embed/pages/preferences/pricing-summit/utils/dominate-inquiry-mailto.ts
+   */
+  function buildDominateBody(shopDomain) {
+    return [
+      'Hi Tony,',
+      '',
+      "I'd like to start the Dominate plan ($499/mo) for my brand. Since multi-store setup is handled manually right now, here's the info to get me onboarded.",
+      '',
+      '—— STORES TO BUNDLE (up to 3 total) ——',
+      '• Primary store URL: ' + shopDomain,
+      '• Additional store URL #1:',
+      '• Additional store URL #2:',
+      '• Credit pool model: □ Separate per-store (default)   □ Share across stores',
+      '',
+      '—— ABOUT US ——',
+      '• Brand / niche:',
+      '• Approx. monthly revenue range:',
+      '  □ $200k–$1M   □ $1M–$5M   □ $5M+',
+      '• Primary day-to-day PageFly user(s) — name + role:',
+      '',
+      "—— FOUNDER'S OFFICE HOURS (2/mo · 45-min async review by Tony · email + Loom, no call) ——",
+      '• Which store do you want Tony to review first?:',
+      '• #1 question or hypothesis you want Tony to dig into:',
+      '• When do you want the first review? □ ASAP   □ Specific date: _____',
+      '',
+      '—— ONBOARDING ——',
+      '• Current Shopify Plus rollout stage:',
+      '  □ Just launched   □ <6 months on Plus   □ 6–18 months   □ 18+ months',
+      '• Anything specific I should know before kickoff (current tools, design system, deadline):',
+      '',
+      '—— COMMERCIAL ——',
+      '• Contract preference: □ Monthly $499   □ Annual (~15% off)   □ Discuss',
+      '• Start timeline:',
+      '  □ ASAP (within 7 days)   □ Within 30 days   □ Within 90 days',
+      '',
+      '—— ANYTHING ELSE ——',
+      '<Free-form>',
+      '',
+      'Best,',
+      '[Your name] / [Your role]'
+    ].join('\n');
   }
-  function showForm() {
-    document.getElementById('modal-form').classList.add('active');
-    setTimeout(() => {
-      document.getElementById('modal-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+
+  function openEmpireInquiry() {
+    const subject = 'Empire plan inquiry | ' + SHOP_DOMAIN;
+    const body = buildEmpireBody(SHOP_DOMAIN);
+    window.location.href = 'mailto:' + RECIPIENT + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
+
+  function openDominateInquiry() {
+    const subject = 'Dominate plan inquiry | ' + SHOP_DOMAIN;
+    const body = buildDominateBody(SHOP_DOMAIN);
+    window.location.href = 'mailto:' + RECIPIENT + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
+  function openModal() { document.getElementById('pricing-modal').classList.add('active'); }
+  function closeModal() { document.getElementById('pricing-modal').classList.remove('active'); }
   function toggleDetails(btn) {
     btn.classList.toggle('open');
     btn.nextElementSibling.classList.toggle('open');
   }
+
+  // Close modal on backdrop click
+  document.getElementById('pricing-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  // Close modal on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
 </script>
 
 </body>
